@@ -1,0 +1,37 @@
+using System;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+
+namespace UI
+{
+    public class MenuPanel : MonoBehaviour
+    {
+        public Button newGameButton, quitButton;
+        public int GamesceneIndex = 1;
+
+        private void Awake()
+        {
+            MyEventManager.Instance.AddEventListener(EventName.NewGame,OnNewGameButtonClicked);
+        }
+
+        private void OnEnable()
+        {
+            Debug.Log("MenuPanel OnEnable");
+            newGameButton.onClick.AddListener( () => MyEventManager.Instance.EventTrigger(EventName.NewGame));
+            quitButton.onClick.AddListener(OnQuitButtonClicked);
+        }
+
+        private void OnQuitButtonClicked() => Application.Quit();
+
+        
+        private void OnNewGameButtonClicked()
+        {
+            Debug.Log("New Game Button Clicked");
+            SceneManager.LoadScene(GamesceneIndex);
+            
+            
+        }
+        
+    }
+}
