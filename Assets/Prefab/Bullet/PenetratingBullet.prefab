@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8758633195590221462}
   - component: {fileID: -1541975806117395300}
   - component: {fileID: 332316465107801147}
-  - component: {fileID: -5750865821984289499}
+  - component: {fileID: 5704778821595748666}
   m_Layer: 6
   m_Name: PenetratingBullet
   m_TagString: Untagged
@@ -149,7 +149,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &-5750865821984289499
+--- !u!114 &5704778821595748666
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -158,8 +158,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 8749374972638513881}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a0cff47a02ba8f4db10c9f75db0a46e, type: 3}
+  m_Script: {fileID: 11500000, guid: a12a3563e0d280444a972a8510ff86ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  speed: 30
   impactForce: 5

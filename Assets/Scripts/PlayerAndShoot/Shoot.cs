@@ -80,4 +80,38 @@ public class Shoot : MonoBehaviour
             _ => BulletManager.Instance.GetNormalBullet()
         };
     }
+
+    private void OnDrawGizmos()
+    {
+        if (firePoint != null)
+        {
+            // 获取FollowMouseRotation组件（如果有）
+            FollowMouseRotation rotationScript = GetComponent<FollowMouseRotation>();
+            Vector2 pivotOffset = rotationScript != null ? rotationScript.rotationPivotOffset : Vector2.zero;
+
+            // 计算旋转轴位置（枪托位置）
+            Vector3 pivotPosition = firePoint.position +
+                                  firePoint.right * pivotOffset.x +
+                                  firePoint.up * pivotOffset.y;
+
+            // 绘制旋转轴位置（红色）
+            Gizmos.color = Color.red;
+            Gizmos.DrawSphere(pivotPosition, 0.1f);
+
+            // 绘制偏移后的实际发射位置（枪口位置，绿色）
+            Vector3 finalPosition = firePoint.position +
+                                  firePoint.right * fireOffset.x +
+                                  firePoint.up * fireOffset.y;
+            Gizmos.color = Color.green;
+            Gizmos.DrawSphere(finalPosition, 0.1f);
+
+            // 绘制从旋转轴到枪口的连线（黄色）
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawLine(pivotPosition, finalPosition);
+
+            // 绘制发射方向（蓝色）
+            Gizmos.color = Color.blue;
+            Gizmos.DrawLine(finalPosition, finalPosition + firePoint.right * 0.5f);
+        }
+    }
 }
