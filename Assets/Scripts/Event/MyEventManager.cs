@@ -4,8 +4,6 @@ using UnityEngine.Events;
 public enum EventName
 {
     NewGame,
-    
-    
 }
 
 public interface IEventInfo
