@@ -163,4 +163,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   impactForce: 5
+  shootClip: {fileID: 8300000, guid: 3832b239be42a1247a2bbe886dbb7176, type: 3}
+  specialEffectClip: {fileID: 8300000, guid: 3832b239be42a1247a2bbe886dbb7176, type: 3}
   destroyRadius: 1.01

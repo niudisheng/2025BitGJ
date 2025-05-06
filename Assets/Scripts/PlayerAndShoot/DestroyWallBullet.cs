@@ -11,6 +11,7 @@ public class DestroyWallBullet : Bullet
     {
         if (collision.TryGetComponent<Tilemap>(out var tilemap))
         {
+            PlaySpecialEffectSound(); // 播放摧毁墙壁音效
             // 获取子弹位置周围一定范围内的所有瓦片
             Vector3Int centerCell = tilemap.WorldToCell(transform.position);
 
@@ -38,7 +39,15 @@ public class DestroyWallBullet : Bullet
         if (collision.CompareTag("Enemy") || collision.CompareTag("Box"))
         {
             ApplyForce(collision.gameObject, rb.velocity);
-            if (collision.CompareTag("Enemy")) Destroy(collision.gameObject);
+            if (collision.CompareTag("Enemy"))
+            {
+                var enemy = collision.GetComponent<Enemy>();
+                if (enemy != null)
+                {
+                    enemy.Die();
+                    // 触发死亡流程
+                }
+            }
             ReturnToPool();
         }
     }

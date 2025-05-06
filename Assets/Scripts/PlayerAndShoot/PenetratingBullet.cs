@@ -12,6 +12,18 @@ public class PenetratingBullet : Bullet
             return;
         }
 
-        if (collision.CompareTag("Enemy")) Destroy(collision.gameObject);
+        if (collision.CompareTag("Enemy"))
+        {
+            PlaySpecialEffectSound(); // 播放穿透音效
+            if (collision.CompareTag("Enemy"))
+            {
+                var enemy = collision.GetComponent<Enemy>();
+                if (enemy != null)
+                {
+                    enemy.Die();
+                    // 触发死亡流程
+                }
+            }
+        }
     }
 }

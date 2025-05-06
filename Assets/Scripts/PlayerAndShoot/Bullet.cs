@@ -11,6 +11,10 @@ public class Bullet : MonoBehaviour
     protected Rigidbody2D rb;
     private IObjectPool<Bullet> _pool;
 
+    [Header("音效设置")]
+    [SerializeField] protected AudioClip shootClip; // 发射音效
+    [SerializeField] protected AudioClip specialEffectClip; // 特殊效果音效
+
     protected virtual void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -21,6 +25,7 @@ public class Bullet : MonoBehaviour
     public virtual void Launch()
     {
         rb.velocity = transform.right * speed;
+        PlayShootSound();
     }
 
     protected void ReturnToPool()
@@ -34,6 +39,22 @@ public class Bullet : MonoBehaviour
         if (target.TryGetComponent<Rigidbody2D>(out var targetRb))
         {
             targetRb.AddForce(forceDirection.normalized * impactForce, ForceMode2D.Impulse);
+        }
+    }
+
+    protected void PlayShootSound()
+    {
+        if (shootClip != null)
+        {
+            SoundManager.Instance.PlaySound(shootClip);
+        }
+    }
+
+    protected void PlaySpecialEffectSound()
+    {
+        if (specialEffectClip != null)
+        {
+            SoundManager.Instance.PlaySound(specialEffectClip);
         }
     }
 }

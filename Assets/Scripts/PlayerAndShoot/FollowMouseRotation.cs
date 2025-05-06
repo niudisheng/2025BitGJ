@@ -8,6 +8,12 @@ public class FollowMouseRotation : MonoBehaviour
     [SerializeField] private Transform playerTransform; // 角色的Transform
     [SerializeField] private bool flipPlayerBasedOnMouse = true; // 是否根据鼠标位置翻转角色
     [SerializeField] public Vector2 rotationPivotOffset = Vector2.zero; // 旋转中心偏移量
+    private SpriteRenderer spriteRenderer;
+
+    private void Awake()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
 
     void Update()
     {
@@ -42,6 +48,9 @@ public class FollowMouseRotation : MonoBehaviour
             scale.x = mouseOnLeft ? -Mathf.Abs(scale.x) : Mathf.Abs(scale.x);
             playerTransform.localScale = scale;
 
+            // 设置枪的朝向（x和y都翻转）
+            spriteRenderer.flipX = mouseOnLeft;
+            spriteRenderer.flipY = mouseOnLeft;
         }
 
         // 设置子物体的旋转

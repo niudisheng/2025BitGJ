@@ -11,11 +11,18 @@ public class Shoot : MonoBehaviour
     [SerializeField] private float fireRate = 0.5f;
     private float nextFireTime = 0f;
 
-    public PlayerInputController inputControl;
+    [Header("µØº–…Ë÷√")]
+    [SerializeField] private int maxNormalAmmo = 30;
+    [SerializeField] private int maxBombAmmo = 5;
+    [SerializeField] private int maxPenetratingAmmo = 10;
+    [SerializeField] private int maxDestroyWallAmmo = 15;
+    private Dictionary<BulletType, int> currentAmmo = new Dictionary<BulletType, int>();
 
     //◊”µØ¿‡–Õ
     public enum BulletType { Normal, Bomb, Penetrating, DestroyWall }
     private BulletType currentBulletType = BulletType.Normal;
+
+    public PlayerInputController inputControl;
 
     private void Awake()
     {
@@ -24,6 +31,12 @@ public class Shoot : MonoBehaviour
         inputControl.Player.Shoot.started += OnShoot;
         inputControl.Player.NextBullet.started += OnNextBullet;
         inputControl.Player.PrevBullet.started += OnPrevBullet;
+
+        // ≥ı ºªØµØ“©
+        currentAmmo[BulletType.Normal] = maxNormalAmmo;
+        currentAmmo[BulletType.Bomb] = maxBombAmmo;
+        currentAmmo[BulletType.Penetrating] = maxPenetratingAmmo;
+        currentAmmo[BulletType.DestroyWall] = maxDestroyWallAmmo;
     }
 
     private void OnEnable()
@@ -38,17 +51,42 @@ public class Shoot : MonoBehaviour
 
     private void OnShoot(InputAction.CallbackContext context)
     {
-        if (Time.time >= nextFireTime)
+        if (Time.time < nextFireTime) return;
+
+        if (currentAmmo[currentBulletType] <= 0)
         {
-            Vector3 finalPosition = firePoint.position +
-                                  firePoint.right * fireOffset.x +
-                                  firePoint.up * fireOffset.y;
-            Bullet bullet = GetBullet();
-            bullet.transform.position = finalPosition;
-            bullet.transform.rotation = firePoint.rotation;
-            bullet.Launch();
-            nextFireTime = Time.time + fireRate;
+            Debug.Log($"{currentBulletType} µØ“©“—∫ƒæ°!");
+            return;
         }
+
+        Vector3 finalPosition = firePoint.position +
+                              firePoint.right * fireOffset.x +
+                              firePoint.up * fireOffset.y;
+        Bullet bullet = GetBullet();
+        if (bullet == null) return;
+
+        bullet.transform.position = finalPosition;
+        bullet.transform.rotation = firePoint.rotation;
+        bullet.Launch();
+
+        // ºı…ŸµØ“©≤¢œ‘ æ
+        currentAmmo[currentBulletType]--;
+        Debug.Log($"{currentBulletType}  £”‡µØ“©: {currentAmmo[currentBulletType]}" +
+            $"/{GetMaxAmmo(currentBulletType)}");
+
+        nextFireTime = Time.time + fireRate;
+    }
+
+    private int GetMaxAmmo(BulletType type)
+    {
+        return type switch
+        {
+            BulletType.Normal => maxNormalAmmo,
+            BulletType.Bomb => maxBombAmmo,
+            BulletType.Penetrating => maxPenetratingAmmo,
+            BulletType.DestroyWall => maxDestroyWallAmmo,
+            _ => 0
+        };
     }
 
     private void OnNextBullet(InputAction.CallbackContext context)

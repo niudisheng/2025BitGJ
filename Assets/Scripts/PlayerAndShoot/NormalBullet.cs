@@ -22,6 +22,7 @@ public class NormalBullet : Bullet
                 return;
             }
 
+            PlaySpecialEffectSound(); // 播放反弹音效
             Vector2 normal = CalculateNormal(collision);
             Reflect(normal);
             currentBounces--;
@@ -32,7 +33,15 @@ public class NormalBullet : Bullet
         {
             // 施加力，方向为子弹运动方向
             ApplyForce(collision.gameObject, rb.velocity);
-            if (collision.CompareTag("Enemy")) Destroy(collision.gameObject);
+            if (collision.CompareTag("Enemy"))
+            {
+                var enemy = collision.GetComponent<Enemy>();
+                if (enemy != null)
+                {
+                    enemy.Die();
+                    // 触发死亡流程
+                }
+            }
             ReturnToPool();
         }
     }
