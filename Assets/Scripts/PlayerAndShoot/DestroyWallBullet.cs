@@ -6,11 +6,19 @@ using UnityEngine.Tilemaps;
 public class DestroyWallBullet : Bullet
 {
     [SerializeField] private float destroyRadius = 0.5f; // 破坏半径
+    [SerializeField] private LayerMask wallLayer;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.TryGetComponent<Tilemap>(out var tilemap))
         {
+            // 检查碰撞对象是否在Wall层
+            if ((wallLayer.value & (1 << collision.gameObject.layer)) == 0)
+            {
+                ReturnToPool();
+                return;
+            }
+
             PlaySpecialEffectSound(); // 播放摧毁墙壁音效
             // 获取子弹位置周围一定范围内的所有瓦片
             Vector3Int centerCell = tilemap.WorldToCell(transform.position);
@@ -50,5 +58,6 @@ public class DestroyWallBullet : Bullet
             }
             ReturnToPool();
         }
+
     }
 }
