@@ -23,6 +23,7 @@ public class Shoot : MonoBehaviour
     private BulletType currentBulletType = BulletType.Normal;
 
     public PlayerInputController inputControl;
+    private GunAnimation gunAnimation;
 
     private void Awake()
     {
@@ -32,22 +33,47 @@ public class Shoot : MonoBehaviour
         inputControl.Player.NextBullet.started += OnNextBullet;
         inputControl.Player.PrevBullet.started += OnPrevBullet;
 
-        // 初始化弹药
+        // 初始化弹药字典
+        currentAmmo = new Dictionary<BulletType, int>
+    {
+        { BulletType.Normal, maxNormalAmmo },
+        { BulletType.Bomb, maxBombAmmo },
+        { BulletType.Penetrating, maxPenetratingAmmo },
+        { BulletType.DestroyWall, maxDestroyWallAmmo }
+    };
+
+        gunAnimation = GetComponent<GunAnimation>();
+    }
+
+    private void Start()
+    {
+        // 注册新游戏事件
+        MyEventManager.Instance.AddEventListener(EventName.NewGame, OnNewGame);
+        inputControl.Enable();
+    }
+
+    private void OnDestroy()
+    {
+        // 移除监听
+        MyEventManager.Instance.RemoveEventListener(EventName.NewGame, OnNewGame);
+        inputControl.Disable();
+    }
+
+    private void OnNewGame()
+    {
+        // 重置弹药数据
         currentAmmo[BulletType.Normal] = maxNormalAmmo;
         currentAmmo[BulletType.Bomb] = maxBombAmmo;
         currentAmmo[BulletType.Penetrating] = maxPenetratingAmmo;
         currentAmmo[BulletType.DestroyWall] = maxDestroyWallAmmo;
+
+        // 重置其他射击相关状态
+        nextFireTime = 0f;
+        currentBulletType = BulletType.Normal;
+
+        Debug.Log("射击系统已重置");
     }
 
-    private void OnEnable()
-    {
-        inputControl.Enable();
-    }
-
-    private void OnDisable()
-    {
-        inputControl.Disable();
-    }
 
     private void OnShoot(InputAction.CallbackContext context)
     {
@@ -57,6 +83,12 @@ public class Shoot : MonoBehaviour
         {
             Debug.Log($"{currentBulletType} 弹药已耗尽!");
             return;
+        }
+
+        // 触发开枪动画
+        if (gunAnimation != null)
+        {
+            gunAnimation.StartFire();
         }
 
         Vector3 finalPosition = firePoint.position +

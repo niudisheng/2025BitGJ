@@ -27,14 +27,40 @@ public class BulletManager : MonoBehaviour
 
     private void Awake()
     {
-        // 单例模式检查
-        if (Instance != null && Instance != this)
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+            CreatePools(); // 确保池在Awake中创建
+        }
+        else if (Instance != this)
         {
             Destroy(gameObject);
-            return;
         }
-        Instance = this;
+    }
+
+    private void Start()
+    {
+        MyEventManager.Instance.AddEventListener(EventName.NewGame, OnNewGame);
+    }
+
+    private void OnDestroy()
+    {
+        MyEventManager.Instance.RemoveEventListener(EventName.NewGame, OnNewGame);
+    }
+
+    private void OnNewGame()
+    {
+        // 清空所有对象池
+        _normalPool?.Clear();
+        _bombPool?.Clear();
+        _penetratingPool?.Clear();
+        _destroyWallPool?.Clear();
+
+        // 重新创建池
         CreatePools();
+
+        Debug.Log("子弹管理器已重置");
     }
 
     private void CreatePools()
