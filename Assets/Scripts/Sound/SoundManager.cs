@@ -7,6 +7,7 @@ public class SoundManager : MonoBehaviour
     public static SoundManager Instance;
     public AudioSource musicSource;
     public AudioSource effectSource;
+    public AudioClip backgroundMusic;
     public AudioClip[] musicClips;
 
     public AudioClip[] effectClips;
@@ -32,6 +33,16 @@ public class SoundManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        SetBackgroundMusic();
+    }
+
+    private void SetBackgroundMusic()
+    {
+        MyEventManager.Instance.AddEventListener(EventName.NewGame, () => PlaySound(backgroundMusic,loop:true,sourceName: "BackgroundMusic"));
+    }
+
     // 加载音频剪辑（一次性）
     public void LoadClip(string clipName, AudioClip clip)
     {
@@ -40,7 +51,7 @@ public class SoundManager : MonoBehaviour
             audioClips.Add(clipName, clip);
         }
     }
-    
+
     private AudioSource CreateAudioSource(string sourceName = "")
     {
         AudioSource newSource = gameObject.AddComponent<AudioSource>();
@@ -69,7 +80,7 @@ public class SoundManager : MonoBehaviour
             return CreateAudioSource(sourceName);
         }
     }
-    
+
     // 播放音效,并指定音频源
     public void PlaySound(AudioClip clip, bool loop = false, float pitch = 1f, float volume = 1f,
         string sourceName = "")
@@ -80,7 +91,6 @@ public class SoundManager : MonoBehaviour
         source.pitch = pitch;
         source.volume = volume;
         source.Play();
-        // StartCoroutine(CheckAudioPlayback(source));
     }
 
     public void PlaySound(Sound sound)
@@ -117,6 +127,7 @@ public class SoundManager : MonoBehaviour
             source.Stop();
         }
     }
+
     private void LateUpdate()
     {
         // 每两秒检查一次音频源状态

@@ -1,18 +1,48 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
+using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class NewBehaviourScript : MonoBehaviour
+
+public class SceneLoadManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    
+    private void UnloadScene()
     {
-        
+        Scene scene = SceneManager.GetActiveScene();
+        SceneManager.LoadSceneAsync(scene.buildIndex);
     }
 
-    // Update is called once per frame
-    void Update()
+    public static void LoadScene(int scene)
     {
-        
+        SceneManager.LoadScene(scene, LoadSceneMode.Additive);
+    }
+
+    
+    public static void SetActiveScene(int scene)
+    {
+        // 通过构建索引获取场景
+        Scene sceneToActivate = SceneManager.GetSceneByBuildIndex(scene);
+
+        // 调试：检查场景是否有效
+        if (sceneToActivate.IsValid())
+        {
+            // 检查场景是否已加载
+            if (sceneToActivate.isLoaded)
+            {
+                SceneManager.SetActiveScene(sceneToActivate);
+                Debug.Log("成功设置活动场景: " + sceneToActivate.name);
+            }
+            else
+            {
+                Debug.LogError("场景 " + sceneToActivate.name + " 尚未加载。");
+            }
+        }
+        else
+        {
+            Debug.LogError("无效的场景，构建索引: " + scene);
+        }
+
+
     }
 }

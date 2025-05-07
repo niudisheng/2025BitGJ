@@ -18,19 +18,18 @@ namespace UI
         private void OnEnable()
         {
             Debug.Log("MenuPanel OnEnable");
+            SceneLoadManager.SetActiveScene(0);
             newGameButton.onClick.AddListener( () => MyEventManager.Instance.EventTrigger(EventName.NewGame));
             quitButton.onClick.AddListener(OnQuitButtonClicked);
         }
 
         private void OnQuitButtonClicked() => Application.Quit();
 
-        
-        private void OnNewGameButtonClicked()
+        [ContextMenu("开始游戏测试")]
+        public void OnNewGameButtonClicked()
         {
             Debug.Log("New Game Button Clicked");
-            SceneManager.LoadScene(GamesceneIndex);
-            
-            
+            SceneLoadManager.LoadScene(GamesceneIndex);
         }
         
     }

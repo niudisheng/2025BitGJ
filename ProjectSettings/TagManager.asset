@@ -43,3 +43,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Front
+    uniqueID: 536661141
+    locked: 0
+  - name: Character
+    uniqueID: 2372433463
+    locked: 0
