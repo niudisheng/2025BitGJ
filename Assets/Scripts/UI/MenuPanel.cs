@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -29,6 +29,14 @@ namespace UI
         public void OnNewGameButtonClicked()
         {
             Debug.Log("New Game Button Clicked");
+
+
+            // 先卸载当前游戏场景（如果存在）
+            if (SceneManager.sceneCount > 1)
+            {
+                SceneManager.UnloadSceneAsync(SceneManager.GetSceneAt(1));
+            }
+
             SceneLoadManager.LoadScene(GamesceneIndex);
         }
         

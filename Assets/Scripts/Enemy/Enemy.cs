@@ -21,6 +21,11 @@ public class Enemy : MonoBehaviour
     // 由Animation Event调用
     public void OnDeathAnimationEnd()
     {
+        // 通知计数器
+        if (enemyCounter != null)
+        {
+            enemyCounter.EnemyDestroyed();
+        }
         Destroy(gameObject);
     }
 
@@ -37,11 +42,6 @@ public class Enemy : MonoBehaviour
         var rb = GetComponent<Rigidbody2D>();
         if (rb != null) rb.simulated = false;
 
-        //计数
-        if (enemyCounter != null)
-        {
-            enemyCounter.EnemyDestroyed();
-        }
 
         // 播放死亡动画
         if (animator != null)

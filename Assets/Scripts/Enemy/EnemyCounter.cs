@@ -1,10 +1,24 @@
-﻿using TMPro;
+﻿using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class EnemyCounter : MonoBehaviour
 {
     public TMP_Text enemyCountText;
     private int enemyCount = 0;
+    public static EnemyCounter Instance { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     private void Start()
     {
@@ -17,6 +31,13 @@ public class EnemyCounter : MonoBehaviour
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         enemyCount = enemies.Length;
         UpdateUI();
+
+
+        // 添加胜利检测
+        if (enemyCount <= 0)
+        {
+            GameManager.Instance.Victory();
+        }
     }
 
     // 单个敌人死亡时调用（高效递减）
@@ -24,6 +45,23 @@ public class EnemyCounter : MonoBehaviour
     {
         enemyCount--;
         UpdateUI();
+        // 添加延迟胜利检测（确保所有动画播放完成）
+        if (enemyCount <= 0)
+        {
+            StartCoroutine(DelayedVictoryCheck());
+        }
+    }
+
+    private IEnumerator DelayedVictoryCheck()
+    {
+        // 等待一帧确保所有敌人销毁逻辑完成
+        yield return null;
+
+        // 再次检查（防止竞争条件）
+        if (GameObject.FindGameObjectsWithTag("Enemy").Length == 0)
+        {
+            GameManager.Instance.Victory();
+        }
     }
 
     // 统一更新UI显示

@@ -103,6 +103,7 @@ public class Shoot : MonoBehaviour
 
         // 减少弹药并显示
         currentAmmo[currentBulletType]--;
+        CheckAmmo();
         Debug.Log($"{currentBulletType} 剩余弹药: {currentAmmo[currentBulletType]}" +
             $"/{GetMaxAmmo(currentBulletType)}");
 
@@ -149,6 +150,32 @@ public class Shoot : MonoBehaviour
             BulletType.DestroyWall => BulletManager.Instance.GetDestroyWallBullet(),
             _ => BulletManager.Instance.GetNormalBullet()
         };
+    }
+
+    private void CheckAmmo()
+    {
+        bool allAmmoDepleted = true;
+
+        foreach (var ammo in currentAmmo)
+        {
+            if (ammo.Value > 0)
+            {
+                allAmmoDepleted = false;
+                break;
+            }
+        }
+
+        if (allAmmoDepleted)
+        {
+            // 延迟一帧确保其他逻辑完成
+            StartCoroutine(DelayedDefeat());
+        }
+    }
+
+    private IEnumerator DelayedDefeat()
+    {
+        yield return null;
+        GameManager.Instance.Defeat();
     }
 
     private void OnDrawGizmos()

@@ -17,7 +17,10 @@ public class FollowMouseRotation : MonoBehaviour
 
     void Update()
     {
-        RotateTowardsMousePosition();
+        if (GameManager.Instance != null && !GameManager.Instance.isGameOver)
+        {
+            RotateTowardsMousePosition(); // 仅在游戏未结束时旋转
+        }
     }
 
     public void RotateTowardsMousePosition()
