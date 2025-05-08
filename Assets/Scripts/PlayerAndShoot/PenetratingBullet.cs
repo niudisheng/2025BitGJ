@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,18 +12,17 @@ public class PenetratingBullet : Bullet
             return;
         }
 
+
         if (collision.CompareTag("Enemy"))
         {
-            PlaySpecialEffectSound(); // ²¥·Å´©Í¸ÒôĞ§
-            if (collision.CompareTag("Enemy"))
+            PlaySpecialEffectSound(); // æ’­æ”¾ç©¿é€éŸ³æ•ˆ
+            var enemy = collision.GetComponent<Enemy>();
+            if (enemy != null)
             {
-                var enemy = collision.GetComponent<Enemy>();
-                if (enemy != null)
-                {
-                    enemy.Die();
-                    // ´¥·¢ËÀÍöÁ÷³Ì
-                }
+                enemy.Die();
+                // è§¦å‘æ­»äº¡æµç¨‹
             }
         }
+        
     }
 }

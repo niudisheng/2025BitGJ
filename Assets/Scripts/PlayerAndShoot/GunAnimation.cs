@@ -1,11 +1,11 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GunAnimation : MonoBehaviour
 {
-    [Header("¶¯»­ÉèÖÃ")]
+    [Header("åŠ¨ç”»è®¾ç½®")]
     [SerializeField] private Animator gunAnimator;
     public bool isFire = false;
 
@@ -27,14 +27,14 @@ public class GunAnimation : MonoBehaviour
         gunAnimator.SetBool("IsFire",isFire);
     }
 
-    // Íâ²¿µ÷ÓÃ£¬¿ªÊ¼Éä»÷¶¯»­
+    // å¤–éƒ¨è°ƒç”¨ï¼Œå¼€å§‹å°„å‡»åŠ¨ç”»
     public void StartFire()
     {
         isFire = true;
         Debug.Log("StartFire: isFire = " + isFire);
     }
 
-    // ¶¯»­ÊÂ¼şµ÷ÓÃ£¬½áÊøÉä»÷¶¯»­
+    // åŠ¨ç”»äº‹ä»¶è°ƒç”¨ï¼Œç»“æŸå°„å‡»åŠ¨ç”»
     public void EndFire()
     {
         isFire = false;

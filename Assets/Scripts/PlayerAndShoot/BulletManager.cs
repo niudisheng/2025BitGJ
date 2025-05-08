@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -31,7 +31,7 @@ public class BulletManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-            CreatePools(); // È·±£³ØÔÚAwakeÖĞ´´½¨
+            CreatePools(); // ç¡®ä¿æ± åœ¨Awakeä¸­åˆ›å»º
         }
         else if (Instance != this)
         {
@@ -51,16 +51,16 @@ public class BulletManager : MonoBehaviour
 
     private void OnNewGame()
     {
-        // Çå¿ÕËùÓĞ¶ÔÏó³Ø
+        // æ¸…ç©ºæ‰€æœ‰å¯¹è±¡æ± 
         _normalPool?.Clear();
         _bombPool?.Clear();
         _penetratingPool?.Clear();
         _destroyWallPool?.Clear();
 
-        // ÖØĞÂ´´½¨³Ø
+        // é‡æ–°åˆ›å»ºæ± 
         CreatePools();
 
-        Debug.Log("×Óµ¯¹ÜÀíÆ÷ÒÑÖØÖÃ");
+        Debug.Log("å­å¼¹ç®¡ç†å™¨å·²é‡ç½®");
     }
 
     private void CreatePools()

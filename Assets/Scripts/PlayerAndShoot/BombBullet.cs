@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,14 +14,14 @@ public class BombBullet : Bullet
 
     private void Explode()
     {
-        PlaySpecialEffectSound(); // ²¥·Å±¬Õ¨ÒôĞ§
-        //¼ì²â±¬Õ¨·¶Î§ÄÚÅö×²Ìå
+        PlaySpecialEffectSound(); // æ’­æ”¾çˆ†ç‚¸éŸ³æ•ˆ
+        //æ£€æµ‹çˆ†ç‚¸èŒƒå›´å†…ç¢°æ’ä½“
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, explosionRadius);
         foreach (var hit in colliders)
         {
             if (hit.CompareTag("Enemy") || hit.CompareTag("Box"))
             {
-                // ±¬Õ¨Á¦µÄ·½ÏòÊÇ´Ó±¬Õ¨ÖĞĞÄÖ¸ÏòÄ¿±ê
+                // çˆ†ç‚¸åŠ›çš„æ–¹å‘æ˜¯ä»çˆ†ç‚¸ä¸­å¿ƒæŒ‡å‘ç›®æ ‡
                 Vector2 forceDirection = hit.transform.position - transform.position;
                 ApplyForce(hit.gameObject, forceDirection);
                 if (hit.CompareTag("Enemy"))

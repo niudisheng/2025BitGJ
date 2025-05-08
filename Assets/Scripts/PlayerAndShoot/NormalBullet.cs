@@ -1,15 +1,15 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class NormalBullet : Bullet
 {
-    [SerializeField] private int maxBounces = 3;  // ×î´ó·´µ¯´ÎÊı
-    private int currentBounces;                   // µ±Ç°Ê£Óà·´µ¯´ÎÊı
+    [SerializeField] private int maxBounces = 3;  // æœ€å¤§åå¼¹æ¬¡æ•°
+    private int currentBounces;                   // å½“å‰å‰©ä½™åå¼¹æ¬¡æ•°
 
     private void OnEnable()
     {
-        currentBounces = maxBounces;  // Ã¿´Î´Ó¶ÔÏó³ØÈ¡³öÊ±ÖØÖÃ·´µ¯´ÎÊı
+        currentBounces = maxBounces;  // æ¯æ¬¡ä»å¯¹è±¡æ± å–å‡ºæ—¶é‡ç½®åå¼¹æ¬¡æ•°
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -18,11 +18,11 @@ public class NormalBullet : Bullet
         {
             if (currentBounces <= 0)
             {
-                ReturnToPool();  // Èç¹û·´µ¯´ÎÊıÓÃÍê£¬»ØÊÕ×Óµ¯
+                ReturnToPool();  // å¦‚æœåå¼¹æ¬¡æ•°ç”¨å®Œï¼Œå›æ”¶å­å¼¹
                 return;
             }
 
-            PlaySpecialEffectSound(); // ²¥·Å·´µ¯ÒôĞ§
+            PlaySpecialEffectSound(); // æ’­æ”¾åå¼¹éŸ³æ•ˆ
             Vector2 normal = CalculateNormal(collision);
             Reflect(normal);
             currentBounces--;
@@ -31,7 +31,7 @@ public class NormalBullet : Bullet
 
         if (collision.CompareTag("Enemy") || collision.CompareTag("Box"))
         {
-            // Ê©¼ÓÁ¦£¬·½ÏòÎª×Óµ¯ÔË¶¯·½Ïò
+            // æ–½åŠ åŠ›ï¼Œæ–¹å‘ä¸ºå­å¼¹è¿åŠ¨æ–¹å‘
             ApplyForce(collision.gameObject, rb.velocity);
             if (collision.CompareTag("Enemy"))
             {
@@ -39,22 +39,22 @@ public class NormalBullet : Bullet
                 if (enemy != null)
                 {
                     enemy.Die();
-                    // ´¥·¢ËÀÍöÁ÷³Ì
+                    // è§¦å‘æ­»äº¡æµç¨‹
                 }
             }
             ReturnToPool();
         }
     }
 
-    //·¨Ïß¼ÆËã
+    //æ³•çº¿è®¡ç®—
     private Vector2 CalculateNormal(Collider2D collider)
     {
-        //Ê¹ÓÃÅö×²Ìå±ß½ç¼ÆËã·¨Ïß
+        //ä½¿ç”¨ç¢°æ’ä½“è¾¹ç•Œè®¡ç®—æ³•çº¿
         Vector2 bulletPos = transform.position;
         Vector2 closestPoint = collider.ClosestPoint(bulletPos);
         Vector2 normal = (bulletPos - closestPoint).normalized;
 
-        // Èç¹û¼ÆËã½á¹ûÎªÁãÏòÁ¿£¨ÀíÂÛÉÏ²»Ó¦¸Ã·¢Éú£©£¬ÔòÊ¹ÓÃÄ¬ÈÏÏòÉÏ·¨Ïß
+        // å¦‚æœè®¡ç®—ç»“æœä¸ºé›¶å‘é‡ï¼ˆç†è®ºä¸Šä¸åº”è¯¥å‘ç”Ÿï¼‰ï¼Œåˆ™ä½¿ç”¨é»˜è®¤å‘ä¸Šæ³•çº¿
         if (normal == Vector2.zero)
         {
             normal = Vector2.up;
@@ -63,7 +63,7 @@ public class NormalBullet : Bullet
         return normal;
     }
 
-    // ·´µ¯·½·¨
+    // åå¼¹æ–¹æ³•
     private void Reflect(Vector2 normal)
     {
         normal = normal.normalized;

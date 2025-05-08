@@ -1,4 +1,4 @@
-using System.Collections;
+锘縰sing System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -11,9 +11,9 @@ public class Bullet : MonoBehaviour
     protected Rigidbody2D rb;
     private IObjectPool<Bullet> _pool;
 
-    [Header("音效设置")]
-    [SerializeField] protected AudioClip shootClip; // 发射音效
-    [SerializeField] protected AudioClip specialEffectClip; // 特殊效果音效
+    [Header("闊虫晥璁剧疆")]
+    [SerializeField] protected AudioClip shootClip; // 鍙戝皠闊虫晥
+    [SerializeField] protected AudioClip specialEffectClip; // 鐗规畩鏁堟灉闊虫晥
 
     protected virtual void Awake()
     {

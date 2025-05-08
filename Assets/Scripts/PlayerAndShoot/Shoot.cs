@@ -1,24 +1,24 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class Shoot : MonoBehaviour
 {
-    [Header("Éä»÷ÉèÖÃ")]
-    [SerializeField] private Transform firePoint;  // »ù´¡·¢Éäµã
-    [SerializeField] private Vector2 fireOffset = Vector2.right * 0.5f; // ·¢ÉäÎ»ÖÃÆ«ÒÆ
+    [Header("å°„å‡»è®¾ç½®")]
+    [SerializeField] private Transform firePoint;  // åŸºç¡€å‘å°„ç‚¹
+    [SerializeField] private Vector2 fireOffset = Vector2.right * 0.5f; // å‘å°„ä½ç½®åç§»
     [SerializeField] private float fireRate = 0.5f;
     private float nextFireTime = 0f;
 
-    [Header("µ¯¼ĞÉèÖÃ")]
+    [Header("å¼¹å¤¹è®¾ç½®")]
     [SerializeField] private int maxNormalAmmo = 30;
     [SerializeField] private int maxBombAmmo = 5;
     [SerializeField] private int maxPenetratingAmmo = 10;
     [SerializeField] private int maxDestroyWallAmmo = 15;
     private Dictionary<BulletType, int> currentAmmo = new Dictionary<BulletType, int>();
 
-    //×Óµ¯ÀàĞÍ
+    //å­å¼¹ç±»å‹
     public enum BulletType { Normal, Bomb, Penetrating, DestroyWall }
     private BulletType currentBulletType = BulletType.Normal;
 
@@ -33,7 +33,7 @@ public class Shoot : MonoBehaviour
         inputControl.Player.NextBullet.started += OnNextBullet;
         inputControl.Player.PrevBullet.started += OnPrevBullet;
 
-        // ³õÊ¼»¯µ¯Ò©×Öµä
+        // åˆå§‹åŒ–å¼¹è¯å­—å…¸
         currentAmmo = new Dictionary<BulletType, int>
     {
         { BulletType.Normal, maxNormalAmmo },
@@ -47,31 +47,31 @@ public class Shoot : MonoBehaviour
 
     private void Start()
     {
-        // ×¢²áĞÂÓÎÏ·ÊÂ¼ş
+        // æ³¨å†Œæ–°æ¸¸æˆäº‹ä»¶
         MyEventManager.Instance.AddEventListener(EventName.NewGame, OnNewGame);
         inputControl.Enable();
     }
 
     private void OnDestroy()
     {
-        // ÒÆ³ı¼àÌı
+        // ç§»é™¤ç›‘å¬
         MyEventManager.Instance.RemoveEventListener(EventName.NewGame, OnNewGame);
         inputControl.Disable();
     }
 
     private void OnNewGame()
     {
-        // ÖØÖÃµ¯Ò©Êı¾İ
+        // é‡ç½®å¼¹è¯æ•°æ®
         currentAmmo[BulletType.Normal] = maxNormalAmmo;
         currentAmmo[BulletType.Bomb] = maxBombAmmo;
         currentAmmo[BulletType.Penetrating] = maxPenetratingAmmo;
         currentAmmo[BulletType.DestroyWall] = maxDestroyWallAmmo;
 
-        // ÖØÖÃÆäËûÉä»÷Ïà¹Ø×´Ì¬
+        // é‡ç½®å…¶ä»–å°„å‡»ç›¸å…³çŠ¶æ€
         nextFireTime = 0f;
         currentBulletType = BulletType.Normal;
 
-        Debug.Log("Éä»÷ÏµÍ³ÒÑÖØÖÃ");
+        Debug.Log("å°„å‡»ç³»ç»Ÿå·²é‡ç½®");
     }
 
 
@@ -81,11 +81,11 @@ public class Shoot : MonoBehaviour
 
         if (currentAmmo[currentBulletType] <= 0)
         {
-            Debug.Log($"{currentBulletType} µ¯Ò©ÒÑºÄ¾¡!");
+            Debug.Log($"{currentBulletType} å¼¹è¯å·²è€—å°½!");
             return;
         }
 
-        // ´¥·¢¿ªÇ¹¶¯»­
+        // è§¦å‘å¼€æªåŠ¨ç”»
         if (gunAnimation != null)
         {
             gunAnimation.StartFire();
@@ -101,9 +101,9 @@ public class Shoot : MonoBehaviour
         bullet.transform.rotation = firePoint.rotation;
         bullet.Launch();
 
-        // ¼õÉÙµ¯Ò©²¢ÏÔÊ¾
+        // å‡å°‘å¼¹è¯å¹¶æ˜¾ç¤º
         currentAmmo[currentBulletType]--;
-        Debug.Log($"{currentBulletType} Ê£Óàµ¯Ò©: {currentAmmo[currentBulletType]}" +
+        Debug.Log($"{currentBulletType} å‰©ä½™å¼¹è¯: {currentAmmo[currentBulletType]}" +
             $"/{GetMaxAmmo(currentBulletType)}");
 
         nextFireTime = Time.time + fireRate;
@@ -124,13 +124,13 @@ public class Shoot : MonoBehaviour
     private void OnNextBullet(InputAction.CallbackContext context)
     {
         currentBulletType = (BulletType)(((int)currentBulletType + 1) % 4);
-        Debug.Log("µ±Ç°×Óµ¯: " + currentBulletType);
+        Debug.Log("å½“å‰å­å¼¹: " + currentBulletType);
     }
 
     private void OnPrevBullet(InputAction.CallbackContext context)
     {
         currentBulletType = (BulletType)(((int)currentBulletType + 3) % 4);
-        Debug.Log("µ±Ç°×Óµ¯: " + currentBulletType);
+        Debug.Log("å½“å‰å­å¼¹: " + currentBulletType);
     }
 
     private Bullet GetBullet()
@@ -155,31 +155,31 @@ public class Shoot : MonoBehaviour
     {
         if (firePoint != null)
         {
-            // »ñÈ¡FollowMouseRotation×é¼ş£¨Èç¹ûÓĞ£©
+            // è·å–FollowMouseRotationç»„ä»¶ï¼ˆå¦‚æœæœ‰ï¼‰
             FollowMouseRotation rotationScript = GetComponent<FollowMouseRotation>();
             Vector2 pivotOffset = rotationScript != null ? rotationScript.rotationPivotOffset : Vector2.zero;
 
-            // ¼ÆËãĞı×ªÖáÎ»ÖÃ£¨Ç¹ÍĞÎ»ÖÃ£©
+            // è®¡ç®—æ—‹è½¬è½´ä½ç½®ï¼ˆæªæ‰˜ä½ç½®ï¼‰
             Vector3 pivotPosition = firePoint.position +
                                   firePoint.right * pivotOffset.x +
                                   firePoint.up * pivotOffset.y;
 
-            // »æÖÆĞı×ªÖáÎ»ÖÃ£¨ºìÉ«£©
+            // ç»˜åˆ¶æ—‹è½¬è½´ä½ç½®ï¼ˆçº¢è‰²ï¼‰
             Gizmos.color = Color.red;
             Gizmos.DrawSphere(pivotPosition, 0.1f);
 
-            // »æÖÆÆ«ÒÆºóµÄÊµ¼Ê·¢ÉäÎ»ÖÃ£¨Ç¹¿ÚÎ»ÖÃ£¬ÂÌÉ«£©
+            // ç»˜åˆ¶åç§»åçš„å®é™…å‘å°„ä½ç½®ï¼ˆæªå£ä½ç½®ï¼Œç»¿è‰²ï¼‰
             Vector3 finalPosition = firePoint.position +
                                   firePoint.right * fireOffset.x +
                                   firePoint.up * fireOffset.y;
             Gizmos.color = Color.green;
             Gizmos.DrawSphere(finalPosition, 0.1f);
 
-            // »æÖÆ´ÓĞı×ªÖáµ½Ç¹¿ÚµÄÁ¬Ïß£¨»ÆÉ«£©
+            // ç»˜åˆ¶ä»æ—‹è½¬è½´åˆ°æªå£çš„è¿çº¿ï¼ˆé»„è‰²ï¼‰
             Gizmos.color = Color.yellow;
             Gizmos.DrawLine(pivotPosition, finalPosition);
 
-            // »æÖÆ·¢Éä·½Ïò£¨À¶É«£©
+            // ç»˜åˆ¶å‘å°„æ–¹å‘ï¼ˆè“è‰²ï¼‰
             Gizmos.color = Color.blue;
             Gizmos.DrawLine(finalPosition, finalPosition + firePoint.right * 0.5f);
         }

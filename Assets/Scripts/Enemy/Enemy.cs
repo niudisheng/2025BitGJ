@@ -1,16 +1,24 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    [Header("ËÀÍöÉèÖÃ")]
+    [Header("æ­»äº¡è®¾ç½®")]
     [SerializeField] protected Animator animator;
     [SerializeField] protected AudioClip deathSound;
 
+    private EnemyCounter enemyCounter;
+
     protected bool isDying = false;
 
-    // ÓÉAnimation Eventµ÷ÓÃ
+    private void Start()
+    {
+        // è·å–æ•Œäººè®¡æ•°å™¨å¼•ç”¨
+        enemyCounter = FindObjectOfType<EnemyCounter>();
+    }
+
+    // ç”±Animation Eventè°ƒç”¨
     public void OnDeathAnimationEnd()
     {
         Destroy(gameObject);
@@ -22,20 +30,26 @@ public class Enemy : MonoBehaviour
 
         isDying = true;
 
-        // ½ûÓÃÅö×²ÌåºÍÎïÀíĞ§¹û
+        // ç¦ç”¨ç¢°æ’ä½“å’Œç‰©ç†æ•ˆæœ
         var collider = GetComponent<Collider2D>();
         if (collider != null) collider.enabled = false;
 
         var rb = GetComponent<Rigidbody2D>();
         if (rb != null) rb.simulated = false;
 
-        // ²¥·ÅËÀÍö¶¯»­
+        //è®¡æ•°
+        if (enemyCounter != null)
+        {
+            enemyCounter.EnemyDestroyed();
+        }
+
+        // æ’­æ”¾æ­»äº¡åŠ¨ç”»
         if (animator != null)
         {
             animator.SetTrigger("Die");
         }
 
-        // ²¥·ÅËÀÍöÒôĞ§
+        // æ’­æ”¾æ­»äº¡éŸ³æ•ˆ
         if (deathSound != null)
         {
             SoundManager.Instance.PlaySound(deathSound);

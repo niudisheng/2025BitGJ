@@ -1,13 +1,13 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class FollowMouseRotation : MonoBehaviour
 {
-    [SerializeField] private Transform playerTransform; // ½ÇÉ«µÄTransform
-    [SerializeField] private bool flipPlayerBasedOnMouse = true; // ÊÇ·ñ¸ù¾İÊó±êÎ»ÖÃ·­×ª½ÇÉ«
-    [SerializeField] public Vector2 rotationPivotOffset = Vector2.zero; // Ğı×ªÖĞĞÄÆ«ÒÆÁ¿
+    [SerializeField] private Transform playerTransform; // è§’è‰²çš„Transform
+    [SerializeField] private bool flipPlayerBasedOnMouse = true; // æ˜¯å¦æ ¹æ®é¼ æ ‡ä½ç½®ç¿»è½¬è§’è‰²
+    [SerializeField] public Vector2 rotationPivotOffset = Vector2.zero; // æ—‹è½¬ä¸­å¿ƒåç§»é‡
     private SpriteRenderer spriteRenderer;
 
     private void Awake()
@@ -22,41 +22,41 @@ public class FollowMouseRotation : MonoBehaviour
 
     public void RotateTowardsMousePosition()
     {
-        // »ñÈ¡Êó±êÔÚÊÀ½ç¿Õ¼äÖĞµÄÎ»ÖÃ
+        // è·å–é¼ æ ‡åœ¨ä¸–ç•Œç©ºé—´ä¸­çš„ä½ç½®
         Vector3 mousePosition = Mouse.current.position.ReadValue();
         Vector3 worldPosition = Camera.main.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, Camera.main.transform.position.z));
 
-        // ¼ÆËãĞı×ªÖĞĞÄÎ»ÖÃ£¨Ó¦ÓÃÆ«ÒÆ£©
+        // è®¡ç®—æ—‹è½¬ä¸­å¿ƒä½ç½®ï¼ˆåº”ç”¨åç§»ï¼‰
         Vector3 pivotPosition = transform.position + transform.right * rotationPivotOffset.x + transform.up * rotationPivotOffset.y;
 
-        // ¼ÆËã·½ÏòÏòÁ¿
+        // è®¡ç®—æ–¹å‘å‘é‡
         Vector3 direction = worldPosition - pivotPosition;
-        direction.z = 0;  // È·±£·½ÏòÏòÁ¿ÔÚ2DÆ½ÃæÄÚ
-        direction = direction.normalized;  // ¹éÒ»»¯·½ÏòÏòÁ¿
+        direction.z = 0;  // ç¡®ä¿æ–¹å‘å‘é‡åœ¨2Då¹³é¢å†…
+        direction = direction.normalized;  // å½’ä¸€åŒ–æ–¹å‘å‘é‡
 
-        // ¼ÆËãĞı×ª½Ç¶È
+        // è®¡ç®—æ—‹è½¬è§’åº¦
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
-        // Èç¹ûÆôÓÃ½ÇÉ«·­×ª
+        // å¦‚æœå¯ç”¨è§’è‰²ç¿»è½¬
         if (flipPlayerBasedOnMouse && playerTransform != null)
         {
-            // ÅĞ¶ÏÊó±êÔÚ½ÇÉ«µÄ×ó²à»¹ÊÇÓÒ²à
+            // åˆ¤æ–­é¼ æ ‡åœ¨è§’è‰²çš„å·¦ä¾§è¿˜æ˜¯å³ä¾§
             bool mouseOnLeft = worldPosition.x < playerTransform.position.x;
 
-            // ÉèÖÃ½ÇÉ«³¯Ïò
+            // è®¾ç½®è§’è‰²æœå‘
             Vector3 scale = playerTransform.localScale;
             scale.x = mouseOnLeft ? -Mathf.Abs(scale.x) : Mathf.Abs(scale.x);
             playerTransform.localScale = scale;
 
-            // ÉèÖÃÇ¹µÄ³¯Ïò£¨xºÍy¶¼·­×ª£©
+            // è®¾ç½®æªçš„æœå‘ï¼ˆxå’Œyéƒ½ç¿»è½¬ï¼‰
             spriteRenderer.flipX = mouseOnLeft;
             spriteRenderer.flipY = mouseOnLeft;
         }
 
-        // ÉèÖÃ×ÓÎïÌåµÄĞı×ª
+        // è®¾ç½®å­ç‰©ä½“çš„æ—‹è½¬
         transform.rotation = Quaternion.Euler(0, 0, angle);
 
-        // Ó¦ÓÃĞı×ªÖĞĞÄÆ«ÒÆ
+        // åº”ç”¨æ—‹è½¬ä¸­å¿ƒåç§»
         transform.position = pivotPosition - (transform.right * rotationPivotOffset.x + transform.up * rotationPivotOffset.y);
     }
 

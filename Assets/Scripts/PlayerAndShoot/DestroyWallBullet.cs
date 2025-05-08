@@ -1,29 +1,29 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class DestroyWallBullet : Bullet
 {
-    [SerializeField] private float destroyRadius = 0.5f; // ÆÆ»µ°ë¾¶
+    [SerializeField] private float destroyRadius = 0.5f; // ç ´ååŠå¾„
     [SerializeField] private LayerMask wallLayer;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.TryGetComponent<Tilemap>(out var tilemap))
         {
-            // ¼ì²éÅö×²¶ÔÏóÊÇ·ñÔÚWall²ã
+            // æ£€æŸ¥ç¢°æ’å¯¹è±¡æ˜¯å¦åœ¨Wallå±‚
             if ((wallLayer.value & (1 << collision.gameObject.layer)) == 0)
             {
                 ReturnToPool();
                 return;
             }
 
-            PlaySpecialEffectSound(); // ²¥·Å´İ»ÙÇ½±ÚÒôĞ§
-            // »ñÈ¡×Óµ¯Î»ÖÃÖÜÎ§Ò»¶¨·¶Î§ÄÚµÄËùÓĞÍßÆ¬
+            PlaySpecialEffectSound(); // æ’­æ”¾æ‘§æ¯å¢™å£éŸ³æ•ˆ
+            // è·å–å­å¼¹ä½ç½®å‘¨å›´ä¸€å®šèŒƒå›´å†…çš„æ‰€æœ‰ç“¦ç‰‡
             Vector3Int centerCell = tilemap.WorldToCell(transform.position);
 
-            // ¼ì²é3x3·¶Î§ÄÚµÄÍßÆ¬
+            // æ£€æŸ¥3x3èŒƒå›´å†…çš„ç“¦ç‰‡
             for (int x = -1; x <= 1; x++)
             {
                 for (int y = -1; y <= 1; y++)
@@ -31,7 +31,7 @@ public class DestroyWallBullet : Bullet
                     Vector3Int cell = new Vector3Int(centerCell.x + x, centerCell.y + y, centerCell.z);
                     if (tilemap.GetTile(cell) != null)
                     {
-                        // ¼ì²éÍßÆ¬ÖĞĞÄÓë×Óµ¯µÄ¾àÀë
+                        // æ£€æŸ¥ç“¦ç‰‡ä¸­å¿ƒä¸å­å¼¹çš„è·ç¦»
                         Vector3 tileWorldPos = tilemap.GetCellCenterWorld(cell);
                         if (Vector3.Distance(transform.position, tileWorldPos) <= destroyRadius)
                         {
@@ -53,7 +53,7 @@ public class DestroyWallBullet : Bullet
                 if (enemy != null)
                 {
                     enemy.Die();
-                    // ´¥·¢ËÀÍöÁ÷³Ì
+                    // è§¦å‘æ­»äº¡æµç¨‹
                 }
             }
             ReturnToPool();
