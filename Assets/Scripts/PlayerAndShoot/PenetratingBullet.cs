@@ -16,7 +16,7 @@ public class PenetratingBullet : Bullet
         if (collision.CompareTag("Enemy"))
         {
             PlaySpecialEffectSound(); // 播放穿透音效
-            var enemy = collision.GetComponent<Enemy>();
+            var enemy = collision.GetComponent<Enemy.Enemy>();
             if (enemy != null)
             {
                 enemy.Die();

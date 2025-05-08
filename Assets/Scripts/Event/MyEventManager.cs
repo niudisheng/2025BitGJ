@@ -4,6 +4,7 @@ using UnityEngine.Events;
 public enum EventName
 {
     NewGame,
+    LoadChapter
 }
 
 public interface IEventInfo

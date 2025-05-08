@@ -18,7 +18,7 @@ namespace UI
         private void OnEnable()
         {
             Debug.Log("MenuPanel OnEnable");
-            SceneLoadManager.SetActiveScene(0);
+            
             newGameButton.onClick.AddListener( () => MyEventManager.Instance.EventTrigger(EventName.NewGame));
             quitButton.onClick.AddListener(OnQuitButtonClicked);
         }
@@ -29,16 +29,11 @@ namespace UI
         public void OnNewGameButtonClicked()
         {
             Debug.Log("New Game Button Clicked");
-
-
-            // 先卸载当前游戏场景（如果存在）
-            if (SceneManager.sceneCount > 1)
-            {
-                SceneManager.UnloadSceneAsync(SceneManager.GetSceneAt(1));
-            }
-
+            SceneLoadManager.SetActiveScene(0);
             SceneLoadManager.LoadScene(GamesceneIndex);
         }
         
+        
     }
+
 }

@@ -35,7 +35,7 @@ public class NormalBullet : Bullet
             ApplyForce(collision.gameObject, rb.velocity);
             if (collision.CompareTag("Enemy"))
             {
-                var enemy = collision.GetComponent<Enemy>();
+                var enemy = collision.GetComponent<Enemy.Enemy>();
                 if (enemy != null)
                 {
                     enemy.Die();

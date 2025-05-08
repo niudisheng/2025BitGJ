@@ -2,74 +2,77 @@
 using TMPro;
 using UnityEngine;
 
-public class EnemyCounter : MonoBehaviour
+namespace Enemy
 {
-    public TMP_Text enemyCountText;
-    private int enemyCount = 0;
-    public static EnemyCounter Instance { get; private set; }
-
-    private void Awake()
+    public class EnemyCounter : MonoBehaviour
     {
-        if (Instance == null)
+        public TMP_Text enemyCountText;
+        private int enemyCount = 0;
+        public static EnemyCounter Instance { get; private set; }
+
+        private void Awake()
         {
-            Instance = this;
+            if (Instance == null)
+            {
+                Instance = this;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
         }
-        else
+
+        private void Start()
         {
-            Destroy(gameObject);
+            UpdateEnemyCount(); // 初始化时强制统计所有敌人
         }
-    }
 
-    private void Start()
-    {
-        UpdateEnemyCount(); // 初始化时强制统计所有敌人
-    }
-
-    // 强制更新计数（全场景统计）
-    public void UpdateEnemyCount()
-    {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        enemyCount = enemies.Length;
-        UpdateUI();
-
-
-        // 添加胜利检测
-        if (enemyCount <= 0)
+        // 强制更新计数（全场景统计）
+        public void UpdateEnemyCount()
         {
-            GameManager.Instance.Victory();
+            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+            enemyCount = enemies.Length;
+            UpdateUI();
+
+
+            // 添加胜利检测
+            if (enemyCount <= 0)
+            {
+                GameManager.Instance.Victory();
+            }
         }
-    }
 
-    // 单个敌人死亡时调用（高效递减）
-    public void EnemyDestroyed()
-    {
-        enemyCount--;
-        UpdateUI();
-        // 添加延迟胜利检测（确保所有动画播放完成）
-        if (enemyCount <= 0)
+        // 单个敌人死亡时调用（高效递减）
+        public void EnemyDestroyed()
         {
-            StartCoroutine(DelayedVictoryCheck());
+            enemyCount--;
+            UpdateUI();
+            // 添加延迟胜利检测（确保所有动画播放完成）
+            if (enemyCount <= 0)
+            {
+                StartCoroutine(DelayedVictoryCheck());
+            }
         }
-    }
 
-    private IEnumerator DelayedVictoryCheck()
-    {
-        // 等待一帧确保所有敌人销毁逻辑完成
-        yield return null;
-
-        // 再次检查（防止竞争条件）
-        if (GameObject.FindGameObjectsWithTag("Enemy").Length == 0)
+        private IEnumerator DelayedVictoryCheck()
         {
-            GameManager.Instance.Victory();
+            // 等待一帧确保所有敌人销毁逻辑完成
+            yield return null;
+
+            // 再次检查（防止竞争条件）
+            if (GameObject.FindGameObjectsWithTag("Enemy").Length == 0)
+            {
+                GameManager.Instance.Victory();
+            }
         }
-    }
 
-    // 统一更新UI显示
-    private void UpdateUI()
-    {
-        if (enemyCountText != null)
+        // 统一更新UI显示
+        private void UpdateUI()
         {
-            enemyCountText.text = $"剩余敌人: {enemyCount}";
+            if (enemyCountText != null)
+            {
+                enemyCountText.text = $"剩余敌人: {enemyCount}";
+            }
         }
     }
 }

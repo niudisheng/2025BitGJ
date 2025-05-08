@@ -7,14 +7,15 @@ using UnityEngine.SceneManagement;
 public class SceneLoadManager : MonoBehaviour
 {
     
-    private void UnloadScene()
+    private static void UnloadScene()
     {
         Scene scene = SceneManager.GetActiveScene();
-        SceneManager.LoadSceneAsync(scene.buildIndex);
+        SceneManager.UnloadSceneAsync(scene.buildIndex);
     }
 
     public static void LoadScene(int scene)
     {
+        UnloadScene();
         SceneManager.LoadScene(scene, LoadSceneMode.Additive);
     }
 

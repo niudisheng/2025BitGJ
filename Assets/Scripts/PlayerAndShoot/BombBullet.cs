@@ -26,7 +26,7 @@ public class BombBullet : Bullet
                 ApplyForce(hit.gameObject, forceDirection);
                 if (hit.CompareTag("Enemy"))
                 {
-                    var enemy = hit.GetComponent<Enemy>();
+                    var enemy = hit.GetComponent<Enemy.Enemy>();
                     if (enemy != null)
                     {
                         enemy.Die();

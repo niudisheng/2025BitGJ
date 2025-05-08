@@ -65,7 +65,11 @@ public class GameManager : MonoBehaviour
             // 显式禁用输入控制
         }
     }
-
+    
+    
+    /// <summary>
+    /// 重置游戏
+    /// </summary>
     public void ResetGame()
     {
         isGameOver = false;
