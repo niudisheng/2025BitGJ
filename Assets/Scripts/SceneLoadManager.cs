@@ -16,7 +16,10 @@ public class SceneLoadManager : MonoBehaviour
     public static void LoadScene(int scene)
     {
         UnloadScene();
-        SceneManager.LoadScene(scene, LoadSceneMode.Additive);
+        var loadSceneTask = SceneManager.LoadSceneAsync(scene, LoadSceneMode.Additive);
+        loadSceneTask.completed += (AsyncOperation obj) => SetActiveScene(scene);
+        
+        SetActiveScene(scene);
     }
 
     
