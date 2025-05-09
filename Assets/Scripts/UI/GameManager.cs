@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     public bool isGameOver = false;
-    private Shoot playerShoot;
+    private Shoot _playerShoot;
 
     private void Awake()
     {
@@ -20,10 +20,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        playerShoot = FindObjectOfType<Shoot>();
-    }
 
     public void Victory()
     {
@@ -43,30 +39,39 @@ public class GameManager : MonoBehaviour
         LockPlayerControls();
     }
 
+
     private void LockPlayerControls()
     {
-
         // 禁用玩家输入
-        var playerInput = FindObjectOfType<PlayerInput>();
-        if (playerInput != null
-    )
+        var playerInput = FindObjectOfType<PlayerInput>(true);
+        if (playerInput != null)
         {
-            playerInput.enabled = false;
+            playerInput.enabled =false;
             playerInput.DeactivateInput();
-            // 确保输入系统被禁用
         }
 
-        // 禁用射击
-        if (playerShoot != null
-    )
+        // 动态获取 Shoot 组件并禁用
+        Shoot shoot = GetPlayerShoot();
+        if (shoot != null)
         {
-            playerShoot.enabled = false;
-            playerShoot.inputControl.Disable();
-            // 显式禁用输入控制
+            shoot.enabled =false;
+            shoot.inputControl.Disable();
+            Debug.Log("已禁用射击");
         }
     }
-    
-    
+    private Shoot GetPlayerShoot()
+    {
+        if (_playerShoot == null)
+        {
+            _playerShoot = FindObjectOfType<Shoot>(true); // 包含隐藏对象
+            if (_playerShoot == null)
+            {
+                Debug.LogWarning("未找到 Shoot 组件！");
+            }
+        }
+        return _playerShoot;
+    }
+
     /// <summary>
     /// 重置游戏
     /// </summary>
@@ -75,9 +80,16 @@ public class GameManager : MonoBehaviour
         isGameOver = false;
 
         // 重新启用控制
-        var playerInput = FindObjectOfType<PlayerInput>();
+        var playerInput = FindObjectOfType<PlayerInput>(true);
         if (playerInput != null) playerInput.enabled = true;
 
-        if (playerShoot != null) playerShoot.enabled = true;
+        // 动态获取 Shoot 组件并启用
+        Shoot shoot = GetPlayerShoot();
+        if (shoot != null)
+        {
+            shoot.enabled =true;            
+            shoot.inputControl.Enable();
+            Debug.Log("已启用射击");
+        }
     }
 }

@@ -918,11 +918,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1056656619991350788, guid: 5857d529bd9c8894cb9d9cb94f60ba4c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -944.1983
+      value: -944.01
       objectReference: {fileID: 0}
     - target: {fileID: 1056656619991350788, guid: 5857d529bd9c8894cb9d9cb94f60ba4c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -522.50745
+      value: -522.66
       objectReference: {fileID: 0}
     - target: {fileID: 1056656619991350788, guid: 5857d529bd9c8894cb9d9cb94f60ba4c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2763,11 +2763,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1056656619991350788, guid: 5857d529bd9c8894cb9d9cb94f60ba4c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -946.6283
+      value: -946.23
       objectReference: {fileID: 0}
     - target: {fileID: 1056656619991350788, guid: 5857d529bd9c8894cb9d9cb94f60ba4c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -522.5975
+      value: -522.61
       objectReference: {fileID: 0}
     - target: {fileID: 1056656619991350788, guid: 5857d529bd9c8894cb9d9cb94f60ba4c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2984,10 +2984,10 @@ MonoBehaviour:
   firePoint: {fileID: 1391077804}
   fireOffset: {x: 0.27, y: 0}
   fireRate: 0.3
-  maxNormalAmmo: 1
-  maxBombAmmo: 1
-  maxPenetratingAmmo: 1
-  maxDestroyWallAmmo: 1
+  maxNormalAmmo: 10
+  maxBombAmmo: 5
+  maxPenetratingAmmo: 5
+  maxDestroyWallAmmo: 5
 --- !u!95 &1391077808
 Animator:
   serializedVersion: 5
@@ -3281,7 +3281,7 @@ MonoBehaviour:
     defaultCapacity: 5
     maxSize: 10
   bombBullet:
-    prefab: {fileID: -2925845759204259483, guid: ac68bcf92dfc6ac4384d018f9e0e55df, type: 3}
+    prefab: {fileID: 632623873691655002, guid: ecd90b00ecd2cad46b06e6423872cf17, type: 3}
     defaultCapacity: 5
     maxSize: 10
   penetratingBullet:

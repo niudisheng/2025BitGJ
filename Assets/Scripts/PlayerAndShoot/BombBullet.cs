@@ -5,6 +5,7 @@ using UnityEngine;
 public class BombBullet : Bullet
 {
     [SerializeField] private float explosionRadius = 3f;
+    [SerializeField] private GameObject explosionPrefab;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -14,7 +15,16 @@ public class BombBullet : Bullet
 
     private void Explode()
     {
+
         PlaySpecialEffectSound(); // 播放爆炸音效
+
+        // 生成爆炸动画
+        if (explosionPrefab != null)
+        {
+            GameObject explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+            Destroy(explosion, 0.3f); // 1秒后销毁爆炸动画（根据动画时长调整）
+        }
+
         //检测爆炸范围内碰撞体
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, explosionRadius);
         foreach (var hit in colliders)
@@ -35,5 +45,9 @@ public class BombBullet : Bullet
             }
         }
     }
-
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, explosionRadius);
+    }
 }
