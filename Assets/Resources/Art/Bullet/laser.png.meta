@@ -123,13 +123,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Sega Genesis 32X - Sonic & Knuckles - Barrier Eggman Laser Prison_pixian_ai_0
+      name: laser_0
       rect:
         serializedVersion: 2
-        x: 16
-        y: 30
-        width: 18
-        height: 162
+        x: 30
+        y: 183
+        width: 162
+        height: 18
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -137,20 +137,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 90f341b703e21ee41969022ec96aa57d
-      internalID: 29922124
+      spriteID: bd7e61a035014574ca4f745bc77d1a48
+      internalID: -2114034356
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sega Genesis 32X - Sonic & Knuckles - Barrier Eggman Laser Prison_pixian_ai_1
+      name: laser_1
       rect:
         serializedVersion: 2
-        x: 40
-        y: 30
-        width: 18
-        height: 162
+        x: 30
+        y: 159
+        width: 162
+        height: 18
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -158,20 +158,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6c5e81a614e057f42b43259d1aeefc90
-      internalID: -954086052
+      spriteID: 500d66d24465d7b47a38dfe480b9b173
+      internalID: -663844954
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sega Genesis 32X - Sonic & Knuckles - Barrier Eggman Laser Prison_pixian_ai_2
+      name: laser_2
       rect:
         serializedVersion: 2
-        x: 64
-        y: 14
-        width: 18
-        height: 178
+        x: 14
+        y: 135
+        width: 178
+        height: 18
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -179,20 +179,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4e4c0eceb3474f2419469babeb701bd9
-      internalID: 1907681524
+      spriteID: d0bc9b44acf1e0b4a8cf9b63fdb5acba
+      internalID: 740634998
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sega Genesis 32X - Sonic & Knuckles - Barrier Eggman Laser Prison_pixian_ai_3
+      name: laser_3
       rect:
         serializedVersion: 2
-        x: 88
-        y: 14
-        width: 34
-        height: 178
+        x: 14
+        y: 95
+        width: 178
+        height: 34
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -200,20 +200,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 70df9372e5dc36d49a9cf5d04c71b11d
-      internalID: -594385140
+      spriteID: f93405f13373d4b4b85d44196745fa29
+      internalID: -1077995431
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sega Genesis 32X - Sonic & Knuckles - Barrier Eggman Laser Prison_pixian_ai_4
+      name: laser_4
       rect:
         serializedVersion: 2
-        x: 128
-        y: 14
-        width: 50
-        height: 178
+        x: 14
+        y: 39
+        width: 178
+        height: 50
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -221,8 +221,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fd2f3f9cbea93ac43bdde0ffa5ef2ca1
-      internalID: 351415733
+      spriteID: 74b51e6d85fb9f648a7891f7e0f70f60
+      internalID: 1311770509
       vertices: []
       indices: 
       edges: []
@@ -238,11 +238,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Sega Genesis 32X - Sonic & Knuckles - Barrier Eggman Laser Prison_pixian_ai_0: 29922124
-      Sega Genesis 32X - Sonic & Knuckles - Barrier Eggman Laser Prison_pixian_ai_1: -954086052
-      Sega Genesis 32X - Sonic & Knuckles - Barrier Eggman Laser Prison_pixian_ai_2: 1907681524
-      Sega Genesis 32X - Sonic & Knuckles - Barrier Eggman Laser Prison_pixian_ai_3: -594385140
-      Sega Genesis 32X - Sonic & Knuckles - Barrier Eggman Laser Prison_pixian_ai_4: 351415733
+      laser_0: -2114034356
+      laser_1: -663844954
+      laser_2: 740634998
+      laser_3: -1077995431
+      laser_4: 1311770509
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
