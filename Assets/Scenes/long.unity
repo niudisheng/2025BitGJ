@@ -549,7 +549,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicSource: {fileID: 1143689761}
   effectSource: {fileID: 400423771}
-  backgroundMusic: {fileID: 0}
+  backgroundMusic: {fileID: 8300000, guid: a905794baa9fe4941b8008e6a123fc18, type: 3}
   musicClips: []
   effectClips: []
 --- !u!1 &1691013824

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
+using UnityEngine.SceneManagement;
 
 public class BulletManager : MonoBehaviour
 {
@@ -24,6 +25,7 @@ public class BulletManager : MonoBehaviour
     private ObjectPool<Bullet> _bombPool;
     private ObjectPool<Bullet> _penetratingPool;
     private ObjectPool<Bullet> _destroyWallPool;
+
 
     private void Awake()
     {
@@ -96,7 +98,14 @@ public class BulletManager : MonoBehaviour
 
     private Bullet CreateBullet(Bullet prefab)
     {
-        var bullet = Instantiate(prefab);
+        var parent = GetBulletParent();
+        if (parent == null)
+        {
+            Debug.LogError("无法获取子弹父对象，将创建在场景根目录");
+            parent = null;
+        }
+
+        var bullet = Instantiate(prefab, parent);
         bullet.SetPool(GetPoolForType(bullet));
         return bullet;
     }
@@ -111,6 +120,47 @@ public class BulletManager : MonoBehaviour
             DestroyWallBullet => _destroyWallPool,
             _ => null
         };
+    }
+
+    private static Transform GetBulletParent()
+    {
+        // 查找玩家对象（跨场景）
+        var player = GameObject.FindWithTag("Player");
+        if (player == null)
+        {
+            Debug.LogError("找不到Player对象！");
+            return null;
+        }
+
+        // 获取Player所在的场景
+        var playerScene = player.scene;
+
+        // 在Player场景中查找或创建Bullets容器
+        var rootObjects = playerScene.GetRootGameObjects();
+        Transform bulletsContainer = null;
+
+        // 查找现有的Bullets容器
+        foreach (var go in rootObjects)
+        {
+            if (go.name == "Bullets")
+            {
+                bulletsContainer = go.transform;
+                break;
+            }
+        }
+
+        // 如果不存在则创建新的
+        if (bulletsContainer == null)
+        {
+            var newContainer = new GameObject("Bullets");
+            SceneManager.MoveGameObjectToScene(newContainer, playerScene);
+            bulletsContainer = newContainer.transform;
+
+            // 可选：设置与Player相同的位置
+            bulletsContainer.position = player.transform.position;
+        }
+
+        return bulletsContainer;
     }
 
     public Bullet GetNormalBullet() => _normalPool.Get();

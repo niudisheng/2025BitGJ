@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BombBullet : Bullet
 {
@@ -21,7 +22,15 @@ public class BombBullet : Bullet
         // 生成爆炸动画
         if (explosionPrefab != null)
         {
+            // 获取Player所在的场景
+            Scene playerScene = GameObject.FindGameObjectWithTag("Player").scene;
+
+            // 实例化爆炸特效
             GameObject explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+
+            // 将爆炸特效移动到Player的场景
+            SceneManager.MoveGameObjectToScene(explosion, playerScene);
+
             Destroy(explosion, 0.3f); // 1秒后销毁爆炸动画（根据动画时长调整）
         }
 
