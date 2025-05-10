@@ -1580,6 +1580,12 @@ MonoBehaviour:
   - {fileID: 434798314}
   - {fileID: 436820426}
   - {fileID: 107224522}
+  selector: {fileID: 0}
+  animationSprites:
+  - {fileID: 0}
+  - {fileID: 0}
+  frameRate: 10
+  animationImage: {fileID: 0}
 --- !u!114 &1840107432
 MonoBehaviour:
   m_ObjectHideFlags: 0
