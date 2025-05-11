@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,11 +14,16 @@ public class SelectWeapon : MonoBehaviour
 
     private Coroutine currentAnimation;        // 保存当前协程，用于停止
 
+    private Shoot.BulletType currentBulletType = Shoot.BulletType.Normal;
+
     private void Start()
     {
         selector = this.GetComponent<RectTransform>(); // 找到高亮框
         animationImage = this.GetComponent<Image>(); // 找到帧动画 Image 组件
         PlayAnimation();
+
+        // 初始选择普通子弹
+        Select((int)currentBulletType);
     }
 
     [ContextMenu("Select Weapon")]
@@ -34,9 +39,10 @@ public class SelectWeapon : MonoBehaviour
             // 移动 selector 到目标武器位置
             selector.anchoredPosition = weapons[index].anchoredPosition;
 
+            // 更新当前子弹类型
+            currentBulletType = (Shoot.BulletType)index;
 
 
-            
         }
     }
 
@@ -69,5 +75,14 @@ public class SelectWeapon : MonoBehaviour
             index = (index + 1) % animationSprites.Count;
             yield return new WaitForSeconds(delay);
         }
+    }
+
+    /// <summary>
+    /// 提供给 Shoot 脚本调用的方法
+    /// </summary>
+    /// <param name="newType">子弹类型</param>
+    public void UpdateWeaponSelection(Shoot.BulletType newType)
+    {
+        Select((int)newType);
     }
 }

@@ -18,12 +18,17 @@ public class Shoot : MonoBehaviour
     [SerializeField] private int maxDestroyWallAmmo = 15;
     private Dictionary<BulletType, int> currentAmmo = new Dictionary<BulletType, int>();
 
+    [Header("音效")]
+    [SerializeField] private AudioClip switchWeaponClip;
+    [SerializeField] private AudioClip emptyAmmoClip;
+
     //子弹类型
     public enum BulletType { Normal, Bomb, Penetrating, DestroyWall }
     private BulletType currentBulletType = BulletType.Normal;
 
     public PlayerInputController inputControl;
     private GunAnimation gunAnimation;
+    private SelectWeapon selectWeaponUI;
 
     private void Awake()
     {
@@ -43,6 +48,12 @@ public class Shoot : MonoBehaviour
     };
 
         gunAnimation = GetComponent<GunAnimation>();
+        // 获取 SelectWeapon 组件
+        selectWeaponUI = FindObjectOfType<SelectWeapon>();
+        if (selectWeaponUI == null)
+        {
+            Debug.LogWarning("SelectWeapon UI not found in scene!");
+        }
     }
 
     private void Start()
@@ -81,6 +92,11 @@ public class Shoot : MonoBehaviour
 
         if (currentAmmo[currentBulletType] <= 0)
         {
+            //音效
+            if (emptyAmmoClip != null)
+            {
+                SoundManager.Instance.PlaySound(emptyAmmoClip);
+            }
             Debug.Log($"{currentBulletType} 弹药已耗尽!");
             return;
         }
@@ -126,12 +142,32 @@ public class Shoot : MonoBehaviour
     {
         currentBulletType = (BulletType)(((int)currentBulletType + 1) % 4);
         Debug.Log("当前子弹: " + currentBulletType);
+        //音效
+        if (switchWeaponClip != null)
+        {
+            SoundManager.Instance.PlaySound(switchWeaponClip);
+        }
+        // 更新UI选择
+        if (selectWeaponUI != null)
+        {
+            selectWeaponUI.UpdateWeaponSelection(currentBulletType);
+        }
     }
 
     private void OnPrevBullet(InputAction.CallbackContext context)
     {
         currentBulletType = (BulletType)(((int)currentBulletType + 3) % 4);
         Debug.Log("当前子弹: " + currentBulletType);
+        //音效
+        if (switchWeaponClip != null)
+        {
+            SoundManager.Instance.PlaySound(switchWeaponClip);
+        }
+        // 更新UI选择
+        if (selectWeaponUI != null)
+        {
+            selectWeaponUI.UpdateWeaponSelection(currentBulletType);
+        }
     }
 
     private Bullet GetBullet()
