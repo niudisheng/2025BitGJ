@@ -3847,8 +3847,8 @@ MonoBehaviour:
   - {fileID: 573101592}
   selector: {fileID: 0}
   animationSprites:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 21300000, guid: 55919dd29898b364c9e0da5fbca4c98b, type: 3}
+  - {fileID: 21300000, guid: 23ba92f9d96cac649b6359f184f5533d, type: 3}
   frameRate: 10
   animationImage: {fileID: 0}
 --- !u!114 &2133392613

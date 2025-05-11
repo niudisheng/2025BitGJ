@@ -20,7 +20,7 @@ public class PickChapterPanel : MonoBehaviour
     private void LoadChapter(int chapterIndex)
     {
         int sceneIndex = chapterIndex + 2;
-        SceneLoadManager.LoadScene(sceneIndex);
+        SceneLoadManager.Instance.LoadScene(sceneIndex);
         GameManager.Instance.ResetGame();
     }
 

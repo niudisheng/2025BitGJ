@@ -43,12 +43,12 @@ public class BulletManager : MonoBehaviour
 
     private void Start()
     {
-        MyEventManager.Instance.AddEventListener(EventName.NewGame, OnNewGame);
+        MyEventManager.Instance.AddEventListener(EventName.LoadChapter, OnNewGame);
     }
 
     private void OnDestroy()
     {
-        MyEventManager.Instance.RemoveEventListener(EventName.NewGame, OnNewGame);
+        MyEventManager.Instance.RemoveEventListener(EventName.LoadChapter, OnNewGame);
     }
 
     private void OnNewGame()

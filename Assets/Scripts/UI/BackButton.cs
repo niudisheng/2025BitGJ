@@ -18,7 +18,7 @@ public class BackButton : MonoBehaviour
 
     private void OnClick()
     {
-        SceneLoadManager.LoadScene(0);
+        SceneLoadManager.Instance.LoadScene(0);
     }
 
 

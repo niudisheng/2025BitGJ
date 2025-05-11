@@ -59,14 +59,14 @@ public class Shoot : MonoBehaviour
     private void Start()
     {
         // 注册新游戏事件
-        MyEventManager.Instance.AddEventListener(EventName.NewGame, OnNewGame);
+        MyEventManager.Instance.AddEventListener(EventName.LoadChapter, OnNewGame);
         inputControl.Enable();
     }
 
     private void OnDestroy()
     {
         // 移除监听
-        MyEventManager.Instance.RemoveEventListener(EventName.NewGame, OnNewGame);
+        MyEventManager.Instance.RemoveEventListener(EventName.LoadChapter, OnNewGame);
         inputControl.Disable();
     }
 

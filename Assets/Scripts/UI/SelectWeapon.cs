@@ -7,10 +7,12 @@ using UnityEngine.UI; // 别忘了引入 UI 命名空间
 public class SelectWeapon : MonoBehaviour
 {
     public List<RectTransform> weapons;        // 武器按钮列表
+    [HideInInspector]
     public RectTransform selector;             // 高亮框
+    [HideInInspector]
+    public Image animationImage;               // 显示帧动画的 Image 组件
     public List<Sprite> animationSprites;      // 帧动画精灵序列
     public float frameRate = 10f;              // 每秒播放几帧
-    public Image animationImage;               // 显示帧动画的 Image 组件
 
     private Coroutine currentAnimation;        // 保存当前协程，用于停止
 
@@ -41,15 +43,9 @@ public class SelectWeapon : MonoBehaviour
 
             // 更新当前子弹类型
             currentBulletType = (Shoot.BulletType)index;
-
-
         }
     }
-
-    private void Update()
-    {
-        
-    }
+    
 
     private void PlayAnimation()
     {

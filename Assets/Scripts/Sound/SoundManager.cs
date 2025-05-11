@@ -40,7 +40,7 @@ public class SoundManager : MonoBehaviour
 
     private void SetBackgroundMusic()
     {
-        MyEventManager.Instance.AddEventListener(EventName.NewGame, () => PlaySound(backgroundMusic,loop:true,sourceName: "BackgroundMusic"));
+        MyEventManager.Instance.AddEventListener(EventName.LoadChapter, () => PlaySound(backgroundMusic,loop:true,sourceName: "BackgroundMusic"));
     }
 
     // 加载音频剪辑（一次性）
