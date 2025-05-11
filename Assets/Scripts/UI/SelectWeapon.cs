@@ -12,7 +12,7 @@ public class SelectWeapon : MonoBehaviour
     [HideInInspector]
     public Image animationImage;               // 显示帧动画的 Image 组件
     public List<Sprite> animationSprites;      // 帧动画精灵序列
-    public float frameRate = 10f;              // 每秒播放几帧
+    private float frameRate = 1f;              // 每秒播放几帧
 
     private Coroutine currentAnimation;        // 保存当前协程，用于停止
 
