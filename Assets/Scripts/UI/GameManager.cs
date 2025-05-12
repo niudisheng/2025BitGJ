@@ -6,7 +6,6 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     public bool isGameOver = false;
-    public GameOverPanel gameOverPanel;
     private Shoot _playerShoot;
 
     private void Awake()
@@ -30,6 +29,7 @@ public class GameManager : MonoBehaviour
 
         isGameOver = true;
         Debug.Log("游戏胜利！所有敌人都被消灭了！");
+        GameOverPanel.instance.OpenGameOverUI(true);
         LockPlayerControls();
     }
 
@@ -39,6 +39,7 @@ public class GameManager : MonoBehaviour
 
         isGameOver = true;
         Debug.Log("游戏失败！弹药耗尽了！");
+        GameOverPanel.instance.OpenGameOverUI(false);
         LockPlayerControls();
     }
 

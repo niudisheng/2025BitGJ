@@ -1413,7 +1413,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isGameOver: 0
-  gameOverPanel: {fileID: 0}
+  gameOverPanel: {fileID: 856261866}
 --- !u!4 &1691013826
 Transform:
   m_ObjectHideFlags: 0
