@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,6 +22,7 @@ public class PickChapterPanel : MonoBehaviour
         int sceneIndex = chapterIndex + 2;
         SceneLoadManager.Instance.LoadScene(sceneIndex);
         GameManager.Instance.ResetGame();
+
     }
 
 

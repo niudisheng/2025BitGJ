@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class Shoot : MonoBehaviour
 {
+    public static Shoot Instance { get; private set; }
+
     [Header("射击设置")]
     [SerializeField] private Transform firePoint;  // 基础发射点
     [SerializeField] private Vector2 fireOffset = Vector2.right * 0.5f; // 发射位置偏移
@@ -32,6 +35,16 @@ public class Shoot : MonoBehaviour
 
     private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this; // 设置单例
+            DontDestroyOnLoad(gameObject);
+        }
+
         inputControl = new PlayerInputController();
 
         inputControl.Player.Shoot.started += OnShoot;
@@ -58,32 +71,47 @@ public class Shoot : MonoBehaviour
 
     private void Start()
     {
-        // 注册新游戏事件
-        MyEventManager.Instance.AddEventListener(EventName.LoadChapter, OnNewGame);
-        inputControl.Enable();
+        InitAmmoByScene();
     }
 
-    private void OnDestroy()
+    private void OnEnable()
     {
-        // 移除监听
-        MyEventManager.Instance.RemoveEventListener(EventName.LoadChapter, OnNewGame);
-        inputControl.Disable();
+        inputControl?.Enable();
     }
 
-    private void OnNewGame()
+    private void OnDisable()
     {
-        // 重置弹药数据
-        currentAmmo[BulletType.Normal] = maxNormalAmmo;
-        currentAmmo[BulletType.Bomb] = maxBombAmmo;
-        currentAmmo[BulletType.Penetrating] = maxPenetratingAmmo;
-        currentAmmo[BulletType.DestroyWall] = maxDestroyWallAmmo;
+        inputControl?.Disable();
+    }
 
-        // 重置其他射击相关状态
+    private void InitAmmoByScene()
+    {
+        int sceneIndex = SceneManager.GetActiveScene().buildIndex;
+        LevelData data = LevelConfigManager.Instance.GetLevelData(sceneIndex);
+
+        if (data != null)
+        {
+            maxNormalAmmo = data.normalAmmo;
+            maxBombAmmo = data.bombAmmo;
+            maxPenetratingAmmo = data.penetratingAmmo;
+            maxDestroyWallAmmo = data.destroyWallAmmo;
+
+            currentAmmo[BulletType.Normal] = maxNormalAmmo;
+            currentAmmo[BulletType.Bomb] = maxBombAmmo;
+            currentAmmo[BulletType.Penetrating] = maxPenetratingAmmo;
+            currentAmmo[BulletType.DestroyWall] = maxDestroyWallAmmo;
+
+            Debug.Log($"✅ 弹药初始化完毕：普通{data.normalAmmo} 炸弹{data.bombAmmo} 穿透{data.penetratingAmmo} 爆墙{data.destroyWallAmmo}");
+        }
+        else
+        {
+            Debug.LogWarning($"⚠️ 未找到该关卡（sceneIndex = {sceneIndex}）的配置数据，使用默认弹药");
+        }
+
         nextFireTime = 0f;
         currentBulletType = BulletType.Normal;
-
-        Debug.Log("射击系统已重置");
     }
+
 
 
     private void OnShoot(InputAction.CallbackContext context)
@@ -100,6 +128,8 @@ public class Shoot : MonoBehaviour
             Debug.Log($"{currentBulletType} 弹药已耗尽!");
             return;
         }
+        // 发射前注册子弹
+        BulletManager.Instance.RegisterBullet();
 
         // 触发开枪动画
         if (gunAnimation != null)
@@ -203,8 +233,16 @@ public class Shoot : MonoBehaviour
 
         if (allAmmoDepleted)
         {
-            // 延迟一帧确保其他逻辑完成
-            StartCoroutine(DelayedDefeat());
+            // 如果弹药耗尽且仍有活跃子弹，延迟判定失败
+            if (BulletManager.Instance.GetActiveBullets() > 0)
+            {
+                Debug.Log("弹药耗尽，等待子弹销毁...");
+            }
+            else
+            {
+                // 如果没有活跃子弹，直接判定失败
+                StartCoroutine(DelayedDefeat());
+            }
         }
     }
 
@@ -213,6 +251,19 @@ public class Shoot : MonoBehaviour
         yield return null;
         GameManager.Instance.Defeat();
     }
+
+    public bool IsAllAmmoEmpty()
+    {
+        foreach (var ammo in currentAmmo)
+        {
+            if (ammo.Value > 0) // 只要有一个弹药未耗尽
+            {
+                return false;
+            }
+        }
+        return true; // 所有弹药已耗尽
+    }
+
 
     private void OnDrawGizmos()
     {

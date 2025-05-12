@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PenetratingBullet : Bullet
 {
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Wall") || collision.gameObject.layer == LayerMask.NameToLayer("StrongWall"))

@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class BulletManager : MonoBehaviour
 {
     public static BulletManager Instance { get; private set; }
+    private int activeBullets = 0; // 活跃的子弹计数
 
     [System.Serializable]
     public class BulletPool
@@ -162,6 +163,52 @@ public class BulletManager : MonoBehaviour
 
         return bulletsContainer;
     }
+
+    // 注册一个新子弹（发射时调用）
+    public void RegisterBullet()
+    {
+        activeBullets++;
+        Debug.Log($"🟡 新子弹发射，当前活跃子弹: {activeBullets}");
+    }
+
+    // 注销一个子弹（子弹回池时调用）
+    public void UnregisterBullet()
+    {
+        activeBullets--;
+        Debug.Log($"🔵 子弹回池，当前活跃子弹: {activeBullets}");
+
+        if (activeBullets <= 0 && Shoot.Instance.IsAllAmmoEmpty())
+        {
+            StartCoroutine(FinalDefeatCheck());
+        }
+    }
+
+    private IEnumerator FinalDefeatCheck()
+    {
+        Debug.Log("等待 2 秒以完成最后一颗子弹可能的击杀...");
+
+        yield return new WaitForSeconds(2f); // 等待最多 2 秒，允许爆炸/击杀完成
+
+        if (GameManager.Instance.isGameOver) yield break;
+
+        var enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        if (enemies.Length == 0)
+        {
+            GameManager.Instance.Victory();
+        }
+        else
+        {
+            GameManager.Instance.Defeat();
+        }
+    }
+
+
+
+    public int GetActiveBullets()
+    {
+        return activeBullets;
+    }
+
 
     public Bullet GetNormalBullet() => _normalPool.Get();
     public Bullet GetBombBullet() => _bombPool.Get();

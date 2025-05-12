@@ -28,9 +28,12 @@ public class Bullet : MonoBehaviour
         PlayShootSound();
     }
 
-    protected void ReturnToPool()
+    protected virtual void ReturnToPool()
     {
         rb.velocity = Vector2.zero;
+        // 通知 BulletManager 子弹已销毁
+        BulletManager.Instance.UnregisterBullet();
+
         _pool?.Release(this);
     }
 

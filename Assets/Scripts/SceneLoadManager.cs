@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -109,6 +109,9 @@ public class SceneLoadManager : MonoBehaviour
         {
             SceneManager.SetActiveScene(newScene);
             Debug.Log("已切换至场景：" + newScene.name);
+
+            //这里触发初始化事件，确保 Shoot 已存在
+            MyEventManager.Instance.EventTrigger(EventName.LoadChapter);
         }
         else
         {
