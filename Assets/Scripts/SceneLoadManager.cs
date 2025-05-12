@@ -115,4 +115,14 @@ public class SceneLoadManager : MonoBehaviour
             Debug.LogError("场景加载失败或无效");
         }
     }
+    
+    public void LoadMenu()
+    {
+        LoadScene(0);
+    }
+
+    public void LoadPickPanel()
+    {
+        LoadScene(1);
+    }
 }

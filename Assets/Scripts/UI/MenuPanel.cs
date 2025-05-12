@@ -39,7 +39,6 @@ namespace UI
 
         private void LoadPickUpScene()
         {
-            
             SceneLoadManager.Instance.LoadScene(GamesceneIndex);
         }
 

@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     public bool isGameOver = false;
+    public GameOverPanel gameOverPanel;
     private Shoot _playerShoot;
 
     private void Awake()
@@ -20,17 +21,7 @@ public class GameManager : MonoBehaviour
         }
     }
     
-    private void OpenGameOverUI(bool isWin)
-    {
-        // TODO: 打开游戏结束界面
-        Debug.Log("打开游戏结束界面");
-        if (isWin)
-        {
-        }
-        else
-        {
-        }
-    }
+    
     
 
     public void Victory()
@@ -104,4 +95,6 @@ public class GameManager : MonoBehaviour
             Debug.Log("已启用射击");
         }
     }
+
+
 }
