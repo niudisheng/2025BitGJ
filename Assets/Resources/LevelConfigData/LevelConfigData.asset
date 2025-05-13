@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levels:
   - levelIndex: 3
-    normalAmmo: 5
+    normalAmmo: 1
     bombAmmo: 0
-    penetratingAmmo: 0
+    penetratingAmmo: 1
     destroyWallAmmo: 0

@@ -1,8 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Shoot : MonoBehaviour
 {
@@ -24,6 +26,9 @@ public class Shoot : MonoBehaviour
     [Header("音效")]
     [SerializeField] private AudioClip switchWeaponClip;
     [SerializeField] private AudioClip emptyAmmoClip;
+
+    public static event Action<bool> OnQKeyStateChanged;  // true=按下, false=松开
+    public static event Action<bool> OnEKeyStateChanged;
 
     //子弹类型
     public enum BulletType { Normal, Bomb, Penetrating, DestroyWall }
@@ -48,8 +53,12 @@ public class Shoot : MonoBehaviour
         inputControl = new PlayerInputController();
 
         inputControl.Player.Shoot.started += OnShoot;
-        inputControl.Player.NextBullet.started += OnNextBullet;
-        inputControl.Player.PrevBullet.started += OnPrevBullet;
+        inputControl.Player.NextBullet.performed += OnNextBullet;
+        inputControl.Player.NextBullet.canceled += OnNextBullet;
+
+        inputControl.Player.PrevBullet.performed += OnPrevBullet;
+        inputControl.Player.PrevBullet.canceled += OnPrevBullet;
+
 
         // 初始化弹药字典
         currentAmmo = new Dictionary<BulletType, int>
@@ -101,11 +110,11 @@ public class Shoot : MonoBehaviour
             currentAmmo[BulletType.Penetrating] = maxPenetratingAmmo;
             currentAmmo[BulletType.DestroyWall] = maxDestroyWallAmmo;
 
-            Debug.Log($"✅ 弹药初始化完毕：普通{data.normalAmmo} 炸弹{data.bombAmmo} 穿透{data.penetratingAmmo} 爆墙{data.destroyWallAmmo}");
+            Debug.Log($"弹药初始化完毕：普通{data.normalAmmo} 炸弹{data.bombAmmo} 穿透{data.penetratingAmmo} 爆墙{data.destroyWallAmmo}");
         }
         else
         {
-            Debug.LogWarning($"⚠️ 未找到该关卡（sceneIndex = {sceneIndex}）的配置数据，使用默认弹药");
+            Debug.LogWarning($"未找到该关卡（sceneIndex = {sceneIndex}）的配置数据，使用默认弹药");
         }
 
         nextFireTime = 0f;
@@ -170,33 +179,47 @@ public class Shoot : MonoBehaviour
 
     private void OnNextBullet(InputAction.CallbackContext context)
     {
-        currentBulletType = (BulletType)(((int)currentBulletType + 1) % 4);
-        Debug.Log("当前子弹: " + currentBulletType);
-        //音效
-        if (switchWeaponClip != null)
+        // 通知 UI 改变颜色
+        OnEKeyStateChanged?.Invoke(context.phase != InputActionPhase.Canceled);
+
+        if (context.phase == InputActionPhase.Performed)
         {
-            SoundManager.Instance.PlaySound(switchWeaponClip);
-        }
-        // 更新UI选择
-        if (selectWeaponUI != null)
-        {
-            selectWeaponUI.UpdateWeaponSelection(currentBulletType);
+            currentBulletType = (BulletType)(((int)currentBulletType + 1) % 4);
+            Debug.Log("当前子弹: " + currentBulletType);
+            //音效
+            if (switchWeaponClip != null)
+            {
+                SoundManager.Instance.PlaySound(switchWeaponClip);
+            }
+
+            // 更新UI选择
+            if (selectWeaponUI != null)
+            {
+                selectWeaponUI.UpdateWeaponSelection(currentBulletType);
+            }
         }
     }
 
     private void OnPrevBullet(InputAction.CallbackContext context)
     {
-        currentBulletType = (BulletType)(((int)currentBulletType + 3) % 4);
-        Debug.Log("当前子弹: " + currentBulletType);
-        //音效
-        if (switchWeaponClip != null)
+        // 通知 UI 改变颜色
+        OnQKeyStateChanged?.Invoke(context.phase != InputActionPhase.Canceled);
+
+        if (context.phase == InputActionPhase.Performed)
         {
-            SoundManager.Instance.PlaySound(switchWeaponClip);
-        }
-        // 更新UI选择
-        if (selectWeaponUI != null)
-        {
-            selectWeaponUI.UpdateWeaponSelection(currentBulletType);
+            currentBulletType = (BulletType)(((int)currentBulletType + 3) % 4);
+            Debug.Log("当前子弹: " + currentBulletType);
+            //音效
+            if (switchWeaponClip != null)
+            {
+                SoundManager.Instance.PlaySound(switchWeaponClip);
+            }
+
+            // 更新UI选择
+            if (selectWeaponUI != null)
+            {
+                selectWeaponUI.UpdateWeaponSelection(currentBulletType);
+            }
         }
     }
 
