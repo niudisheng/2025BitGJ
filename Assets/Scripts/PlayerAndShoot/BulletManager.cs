@@ -168,14 +168,14 @@ public class BulletManager : MonoBehaviour
     public void RegisterBullet()
     {
         activeBullets++;
-        Debug.Log($"🟡 新子弹发射，当前活跃子弹: {activeBullets}");
+        Debug.Log($"新子弹发射，当前活跃子弹: {activeBullets}");
     }
 
     // 注销一个子弹（子弹回池时调用）
     public void UnregisterBullet()
     {
         activeBullets--;
-        Debug.Log($"🔵 子弹回池，当前活跃子弹: {activeBullets}");
+        Debug.Log($"子弹回池，当前活跃子弹: {activeBullets}");
 
         if (activeBullets <= 0 && Shoot.Instance.IsAllAmmoEmpty())
         {

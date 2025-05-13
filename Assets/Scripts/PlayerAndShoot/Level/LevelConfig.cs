@@ -16,4 +16,7 @@ public class LevelData
     public int bombAmmo;
     public int penetratingAmmo;
     public int destroyWallAmmo;
+
+    [TextArea]
+    public string guideMessage;//教学字幕
 }

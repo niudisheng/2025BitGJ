@@ -275,6 +275,7 @@ public class Shoot : MonoBehaviour
         GameManager.Instance.Defeat();
     }
 
+    #region 外部调用
     public bool IsAllAmmoEmpty()
     {
         foreach (var ammo in currentAmmo)
@@ -287,6 +288,14 @@ public class Shoot : MonoBehaviour
         return true; // 所有弹药已耗尽
     }
 
+    public string GetAmmoText(BulletType type)
+    {
+        return currentAmmo.ContainsKey(type)
+            ? $"{currentAmmo[type]}/{GetMaxAmmo(type)}"
+            : "0/0";
+    }
+
+    #endregion
 
     private void OnDrawGizmos()
     {
