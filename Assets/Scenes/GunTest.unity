@@ -4809,8 +4809,8 @@ MonoBehaviour:
   selector: {fileID: 0}
   animationImage: {fileID: 0}
   animationSprites:
-  - {fileID: 21300000, guid: 55919dd29898b364c9e0da5fbca4c98b, type: 3}
-  - {fileID: 21300000, guid: 23ba92f9d96cac649b6359f184f5533d, type: 3}
+  - {fileID: 21300000, guid: f392bd0449fb2c64ea578d5654bcbd12, type: 3}
+  - {fileID: 21300000, guid: 76eadc98e9c532e409d5430284e32a5c, type: 3}
 --- !u!114 &2133392613
 MonoBehaviour:
   m_ObjectHideFlags: 0

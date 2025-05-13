@@ -75,7 +75,8 @@ public class SceneLoadManager : MonoBehaviour
     }
     public void LoadScene(int sceneIndex)
     {
-        StartCoroutine(LoadSceneCoroutine(sceneIndex));
+        // StartCoroutine(LoadSceneCoroutine(sceneIndex));
+        LoadScene1(sceneIndex);
     }
 
     private IEnumerator LoadSceneCoroutine(int sceneIndex)

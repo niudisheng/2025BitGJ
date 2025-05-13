@@ -18,8 +18,7 @@ namespace UI
         private void OnEnable()
         {
             Debug.Log("MenuPanel OnEnable");
-            // newGameButton.onClick.AddListener( () => MyEventManager.Instance.EventTrigger(EventName.NewGame));
-            newGameButton.onClick.AddListener( OnNewGameButtonClicked);
+            newGameButton.onClick.AddListener( OnNewGameButtonClicked1);
             quitButton.onClick.AddListener(OnQuitButtonClicked);
         }
 
@@ -34,6 +33,12 @@ namespace UI
         public void OnNewGameButtonClicked()
         {
             MyEventManager.Instance.EventTrigger(EventName.NewGame);
+
+        }
+        [ContextMenu("开始游戏测试")]
+        public void OnNewGameButtonClicked1()
+        {
+            SceneLoadManager.Instance.LoadScene(GamesceneIndex);
 
         }
 

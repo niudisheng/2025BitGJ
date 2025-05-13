@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
@@ -19,9 +20,7 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    
-    
-    
+
 
     public void Victory()
     {
@@ -50,7 +49,7 @@ public class GameManager : MonoBehaviour
         var playerInput = FindObjectOfType<PlayerInput>(true);
         if (playerInput != null)
         {
-            playerInput.enabled =false;
+            playerInput.enabled = false;
             playerInput.DeactivateInput();
         }
 
@@ -58,11 +57,12 @@ public class GameManager : MonoBehaviour
         Shoot shoot = GetPlayerShoot();
         if (shoot != null)
         {
-            shoot.enabled =false;
+            shoot.enabled = false;
             shoot.inputControl.Disable();
             Debug.Log("已禁用射击");
         }
     }
+
     private Shoot GetPlayerShoot()
     {
         if (_playerShoot == null)
@@ -73,6 +73,7 @@ public class GameManager : MonoBehaviour
                 Debug.LogWarning("未找到 Shoot 组件！");
             }
         }
+
         return _playerShoot;
     }
 
@@ -91,11 +92,9 @@ public class GameManager : MonoBehaviour
         Shoot shoot = GetPlayerShoot();
         if (shoot != null)
         {
-            shoot.enabled =true;            
+            shoot.enabled = true;
             shoot.inputControl.Enable();
             Debug.Log("已启用射击");
         }
     }
-
-
 }
