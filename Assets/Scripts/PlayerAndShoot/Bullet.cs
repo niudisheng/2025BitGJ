@@ -15,6 +15,9 @@ public class Bullet : MonoBehaviour
     [SerializeField] protected AudioClip shootClip; // 发射音效
     [SerializeField] protected AudioClip specialEffectClip; // 特殊效果音效
 
+    private float lifeTime = 20f; // 子弹生命周期，单位秒
+    private float lifeTimer = 0f; // 当前计时器
+
     protected virtual void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -26,6 +29,19 @@ public class Bullet : MonoBehaviour
     {
         rb.velocity = transform.right * speed;
         PlayShootSound();
+        lifeTimer = lifeTime;  // 启动生命周期计时
+    }
+
+    protected virtual void Update()
+    {
+        if (lifeTimer > 0)
+        {
+            lifeTimer -= Time.deltaTime;
+            if (lifeTimer <= 0)
+            {
+                ReturnToPool(); // 超过生命周期后回池
+            }
+        }
     }
 
     protected virtual void ReturnToPool()

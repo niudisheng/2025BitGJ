@@ -20,6 +20,8 @@ public class LevelData
     public int penetratingAmmo;
     public int destroyWallAmmo;
 
+    public int enemyCount;
+
     [TextArea]
     public string guideMessage;//教学字幕
     

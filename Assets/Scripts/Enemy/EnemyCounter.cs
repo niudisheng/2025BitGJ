@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Enemy
 {
@@ -9,6 +10,8 @@ namespace Enemy
         public TMP_Text enemyCountText;
         private int enemyCount = 0;
         public static EnemyCounter Instance { get; private set; }
+
+        private LevelConfigManager levelConfigManager;
 
         private void Awake()
         {
@@ -20,6 +23,7 @@ namespace Enemy
             {
                 Destroy(gameObject);
             }
+            levelConfigManager = LevelConfigManager.Instance;
         }
 
         private void Start()
@@ -30,16 +34,20 @@ namespace Enemy
         // 强制更新计数（全场景统计）
         public void UpdateEnemyCount()
         {
-            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-            enemyCount = enemies.Length;
-            UpdateUI();
+            int currentLevelIndex = SceneManager.GetActiveScene().buildIndex;
+            LevelData levelData = levelConfigManager.GetLevelData(currentLevelIndex);
 
+            if (levelData != null)
+            {
+                enemyCount = levelData.enemyCount;
+                UpdateUI();
+            }
 
             // 添加胜利检测
-            if (enemyCount <= 0)
-            {
-                GameManager.Instance.Victory();
-            }
+            //if (enemyCount <= 0)
+            //{
+            //    GameManager.Instance.Victory();
+            //}
         }
 
         // 单个敌人死亡时调用（高效递减）
