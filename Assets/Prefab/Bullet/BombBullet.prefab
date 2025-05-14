@@ -101,7 +101,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  impactForce: 5
+  impactForce: 20
   shootClip: {fileID: 8300000, guid: 3832b239be42a1247a2bbe886dbb7176, type: 3}
   specialEffectClip: {fileID: 8300000, guid: a4d7bf3573d37e4428096fc696d57d16, type: 3}
   explosionRadius: 3

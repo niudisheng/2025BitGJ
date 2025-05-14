@@ -44,10 +44,10 @@ namespace Enemy
             }
 
             // 添加胜利检测
-            if (enemyCount <= 0)
-            {
-                GameManager.Instance.Victory();
-            }
+            //if (enemyCount <= 0)
+            //{
+            //    GameManager.Instance.Victory();
+            //}
         }
 
         // 单个敌人死亡时调用（高效递减）
