@@ -107,6 +107,7 @@ public class GameManager : MonoBehaviour
         {
             shoot.enabled = true;
             shoot.inputControl.Enable();
+            shoot.ResetAmmo();
             Debug.Log("已启用射击");
         }
     }
