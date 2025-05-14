@@ -7,23 +7,18 @@ using UnityEngine.UI;
 public class PickChapterPanel : MonoBehaviour
 {
     public Button[] ChapterButtons;
-
+    public LevelConfig levelConfig;
     private void Start()
     {
         for (int i = 0; i < ChapterButtons.Length; i++)
         {
             var i1 = i;
-            ChapterButtons[i].onClick.AddListener(() => LoadChapter(i1+1));
+            int chapterIndex = levelConfig.levels[i1].levelIndex; 
+            ChapterButtons[i].onClick.AddListener(() => GameManager.Instance.LoadChapter(chapterIndex));
         }
     }
 
-    private void LoadChapter(int chapterIndex)
-    {
-        int sceneIndex = chapterIndex + 2;
-        SceneLoadManager.Instance.LoadScene(sceneIndex);
-        GameManager.Instance.ResetGame();
-
-    }
+    
 
 
 }

@@ -2,12 +2,18 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class GameOverPanel : MonoBehaviour
 {
     public static GameOverPanel instance;
+    [Header("返回关卡选择")]
     public Button BackToPickButton;
+    [Header("下一关")]
+    public Button NextLevelButton;
+    [Header("重开")]
+    public Button RetryButton;
     public GameObject WinPanel;
     public GameObject LosePanel;
     private void Awake()
@@ -24,16 +30,24 @@ public class GameOverPanel : MonoBehaviour
 
     private void Start()
     {
-        BackToPickButton.onClick.AddListener(BackToPick);
+        SetButtonFunc(BackToPickButton, BackToPick);
+        SetButtonFunc(NextLevelButton, NextLevel);
+        SetButtonFunc(RetryButton, ResetLevel);
         WinPanel.SetActive(false);
         LosePanel.SetActive(false);
     }
 
+    private void SetButtonFunc(Button button, UnityAction action)
+    {
+        button.onClick.RemoveAllListeners();
+        button.onClick.AddListener(action);
+    }
+
     private void BackToPick()
     {
-        SceneLoadManager.Instance.LoadPickPanel();
         WinPanel.SetActive(false);
         LosePanel.SetActive(false);
+        SceneLoadManager.Instance.LoadPickPanel();
     }
     
     /// <summary>
@@ -52,5 +66,25 @@ public class GameOverPanel : MonoBehaviour
         {
             LosePanel.SetActive(true);
         }
+    }
+    
+    
+    
+    /// <summary>
+    /// 重置关卡
+    /// </summary>
+    public void ResetLevel()
+    {
+        LosePanel.SetActive(false);
+        GameManager.Instance.ResetGame();
+    }
+    
+    /// <summary>
+    /// 下一关
+    /// </summary>
+    public void NextLevel()
+    {
+        WinPanel.SetActive(false);
+        GameManager.Instance.LoadChapter(GameManager.Instance.currentLevelData.GetNextLevelIndex());
     }
 }

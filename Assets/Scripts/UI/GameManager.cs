@@ -8,6 +8,11 @@ public class GameManager : MonoBehaviour
 
     public bool isGameOver = false;
     private Shoot _playerShoot;
+    
+    /// <summary>
+    /// 当前关卡数据
+    /// </summary>
+    public LevelData currentLevelData;
 
     private void Awake()
     {
@@ -96,5 +101,10 @@ public class GameManager : MonoBehaviour
             shoot.inputControl.Enable();
             Debug.Log("已启用射击");
         }
+    }
+    public void LoadChapter(int sceneIndex)
+    {
+        SceneLoadManager.Instance.LoadScene(sceneIndex);
+        GameManager.Instance.ResetGame();
     }
 }
