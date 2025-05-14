@@ -295,6 +295,10 @@ public class Shoot : MonoBehaviour
             : "0/0";
     }
 
+    public void ResetAmmo()
+    {
+        InitAmmoByScene();
+    }
     #endregion
 
     private void OnDrawGizmos()
