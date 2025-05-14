@@ -118,9 +118,9 @@ public class GameManager : MonoBehaviour
 
     public void LoadChapter(int sceneIndex)
     {
-        if (sceneIndex > levelConfig.levels[-1].levelIndex)
+        if (sceneIndex > levelConfig.levels[^1].levelIndex)
         {
-            LoadChapter(levelConfig.levels[-1].levelIndex);
+            LoadChapter(levelConfig.levels[^1].levelIndex);
             return;
         }
         SceneLoadManager.Instance.LoadScene(sceneIndex);
