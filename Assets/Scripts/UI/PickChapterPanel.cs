@@ -15,7 +15,6 @@ public class PickChapterPanel : MonoBehaviour
         {
             var i1 = i;
             int chapterIndex = levelConfig.levels[i1].levelIndex;
-
             ChapterButtons[i].onClick.AddListener(() => GameManager.Instance.LoadChapter(chapterIndex));
         }
     }

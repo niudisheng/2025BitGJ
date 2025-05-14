@@ -50,6 +50,7 @@ public class GameOverPanel : MonoBehaviour
     {
         WinPanel.SetActive(false);
         LosePanel.SetActive(false);
+        ButtonGroup.SetActive(false);
         SceneLoadManager.Instance.LoadPickPanel();
     }
     
@@ -79,7 +80,9 @@ public class GameOverPanel : MonoBehaviour
     /// </summary>
     public void ResetLevel()
     {
+        WinPanel.SetActive(false);
         LosePanel.SetActive(false);
+        ButtonGroup.SetActive(false);
         int currentSceneIndex = UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex;
         SceneLoadManager.Instance.LoadScene(currentSceneIndex); //重新加载当前关卡
     }
@@ -91,6 +94,8 @@ public class GameOverPanel : MonoBehaviour
     public void NextLevel()
     {
         WinPanel.SetActive(false);
+        LosePanel.SetActive(false);
+        ButtonGroup.SetActive(false);
         GameManager.Instance.LoadChapter(GameManager.Instance.currentLevelData.GetNextLevelIndex());
     }
 }

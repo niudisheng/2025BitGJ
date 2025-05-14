@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
     public bool isGameOver = false;
     private Shoot _playerShoot;
     
+    public LevelConfig levelConfig;
+    
     /// <summary>
     /// 当前关卡数据
     /// </summary>
@@ -86,12 +88,12 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// 重置游戏
     /// </summary>
-    public void ResetGame()
+    public void ResetGame(int sceneIndex)
     {
         isGameOver = false;
-
+        
         // 初始化当前关卡数据
-        int sceneIndex = UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex;
+        // int sceneIndex = UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex;
         currentLevelData = LevelConfigManager.Instance.GetLevelData(sceneIndex);
         if (currentLevelData == null)
         {
@@ -115,7 +117,8 @@ public class GameManager : MonoBehaviour
     public void LoadChapter(int sceneIndex)
     {
         SceneLoadManager.Instance.LoadScene(sceneIndex);
-        GameManager.Instance.ResetGame();
+        GameManager.Instance.ResetGame(sceneIndex);
+        MyEventManager.Instance.EventTrigger(EventName.LoadChapter);
     }
 
 }

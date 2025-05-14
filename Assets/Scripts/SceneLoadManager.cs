@@ -75,8 +75,8 @@ public class SceneLoadManager : MonoBehaviour
     }
     public void LoadScene(int sceneIndex)
     {
-        //LoadScene1(sceneIndex);
-        StartCoroutine(LoadSceneCoroutine(sceneIndex));
+        LoadScene1(sceneIndex);
+        // StartCoroutine(LoadSceneCoroutine(sceneIndex));
     }
 
     private IEnumerator LoadSceneCoroutine(int sceneIndex)
@@ -111,8 +111,7 @@ public class SceneLoadManager : MonoBehaviour
             SceneManager.SetActiveScene(newScene);
             Debug.Log("已切换至场景：" + newScene.name);
 
-            //这里触发初始化事件，确保 Shoot 已存在
-            GameManager.Instance.ResetGame();
+            
         }
         else
         {
