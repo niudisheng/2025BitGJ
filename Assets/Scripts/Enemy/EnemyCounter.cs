@@ -82,5 +82,11 @@ namespace Enemy
                 enemyCountText.text = $"剩余敌人: {enemyCount}";
             }
         }
+        public int GetRemainingEnemyCount()
+        {
+            return enemyCount;
+        }
+
     }
+
 }

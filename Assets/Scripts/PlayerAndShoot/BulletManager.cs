@@ -210,8 +210,15 @@ public class BulletManager : MonoBehaviour
 
         if (GameManager.Instance.isGameOver) yield break;
 
-        var enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        if (enemies.Length == 0)
+        if (Enemy.EnemyCounter.Instance == null)
+        {
+            Debug.LogError("找不到 EnemyCounter 实例，无法判断敌人数量！");
+            GameManager.Instance.Defeat(); // 或者保守处理为失败
+            yield break;
+        }
+
+        int remaining = Enemy.EnemyCounter.Instance.GetRemainingEnemyCount();
+        if (remaining == 0)
         {
             GameManager.Instance.Victory();
         }
@@ -226,6 +233,25 @@ public class BulletManager : MonoBehaviour
     public int GetActiveBullets()
     {
         return activeBullets;
+    }
+
+    public void Reset()
+    {
+        activeBullets = 0;
+        Debug.Log("BulletManager: 已重置活跃子弹数为 0");
+    }
+
+    public void RecreatePools()
+    {
+        _normalPool?.Clear();
+        _bombPool?.Clear();
+        _penetratingPool?.Clear();
+        _destroyWallPool?.Clear();
+
+        CreatePools(); // 重新创建所有对象池
+        activeBullets = 0;
+
+        Debug.Log("BulletManager: 所有对象池已重建，活跃子弹数已重置");
     }
 
 

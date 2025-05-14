@@ -225,21 +225,24 @@ public class Shoot : MonoBehaviour
 
     private Bullet GetBullet()
     {
-        if (BulletManager.Instance == null)
-        {
-            Debug.LogError("BulletManager.Instance is null!");
-            return null;
-        }
-
-        return currentBulletType switch
+        Bullet bullet = currentBulletType switch
         {
             BulletType.Normal => BulletManager.Instance.GetNormalBullet(),
             BulletType.Bomb => BulletManager.Instance.GetBombBullet(),
             BulletType.Penetrating => BulletManager.Instance.GetPenetratingBullet(),
             BulletType.DestroyWall => BulletManager.Instance.GetDestroyWallBullet(),
-            _ => BulletManager.Instance.GetNormalBullet()
+            _ => null
         };
+
+        if (bullet == null || bullet.gameObject == null)
+        {
+            Debug.LogError("获取到无效子弹对象！");
+            return null;
+        }
+
+        return bullet;
     }
+
 
     private void CheckAmmo()
     {

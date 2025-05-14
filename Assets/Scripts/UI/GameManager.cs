@@ -112,6 +112,8 @@ public class GameManager : MonoBehaviour
             shoot.ResetAmmo();
             Debug.Log("已启用射击");
         }
+        BulletManager.Instance?.Reset();
+        BulletManager.Instance?.RecreatePools();
     }
 
     public void LoadChapter(int sceneIndex)
