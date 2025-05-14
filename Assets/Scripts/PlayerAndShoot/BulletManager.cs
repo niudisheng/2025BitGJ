@@ -71,28 +71,47 @@ public class BulletManager : MonoBehaviour
         _normalPool = new ObjectPool<Bullet>(
             () => CreateBullet(normalBullet.prefab),
             bullet => bullet.gameObject.SetActive(true),
-            bullet => bullet.gameObject.SetActive(false),
+            bullet =>
+            {
+                if (bullet != null && bullet.gameObject != null)
+                    bullet.gameObject.SetActive(false);
+            },
+
             bullet => { },
             false, normalBullet.defaultCapacity, normalBullet.maxSize);
 
         _bombPool = new ObjectPool<Bullet>(
             () => CreateBullet(bombBullet.prefab),
             bullet => bullet.gameObject.SetActive(true),
-            bullet => bullet.gameObject.SetActive(false),
+            bullet =>
+            {
+                if (bullet != null && bullet.gameObject != null)
+                    bullet.gameObject.SetActive(false);
+            },
+
             bullet => { },
             false, bombBullet.defaultCapacity, bombBullet.maxSize);
 
         _penetratingPool = new ObjectPool<Bullet>(
             () => CreateBullet(penetratingBullet.prefab),
             bullet => bullet.gameObject.SetActive(true),
-            bullet => bullet.gameObject.SetActive(false),
+            bullet => 
+            { 
+                if (bullet != null && bullet.gameObject != null)
+                    bullet.gameObject.SetActive(false); 
+            },
+
             bullet => { },
             false, penetratingBullet.defaultCapacity, penetratingBullet.maxSize);
 
         _destroyWallPool = new ObjectPool<Bullet>(
             () => CreateBullet(destroyWallBullet.prefab),
             bullet => bullet.gameObject.SetActive(true),
-            bullet => bullet.gameObject.SetActive(false),
+            bullet =>
+            {
+                if (bullet != null && bullet.gameObject != null)
+                    bullet.gameObject.SetActive(false);
+            },
             bullet => { },
             false, destroyWallBullet.defaultCapacity, destroyWallBullet.maxSize);
     }

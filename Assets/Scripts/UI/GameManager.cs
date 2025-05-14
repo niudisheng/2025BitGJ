@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
     }
 
 
@@ -89,11 +90,18 @@ public class GameManager : MonoBehaviour
     {
         isGameOver = false;
 
+        // 初始化当前关卡数据
+        int sceneIndex = UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex;
+        currentLevelData = LevelConfigManager.Instance.GetLevelData(sceneIndex);
+        if (currentLevelData == null)
+        {
+            Debug.LogWarning($"未能找到当前场景（index: {sceneIndex}）的关卡配置！");
+        }
+
         // 重新启用控制
         var playerInput = FindObjectOfType<PlayerInput>(true);
         if (playerInput != null) playerInput.enabled = true;
 
-        // 动态获取 Shoot 组件并启用
         Shoot shoot = GetPlayerShoot();
         if (shoot != null)
         {
@@ -102,9 +110,11 @@ public class GameManager : MonoBehaviour
             Debug.Log("已启用射击");
         }
     }
+
     public void LoadChapter(int sceneIndex)
     {
         SceneLoadManager.Instance.LoadScene(sceneIndex);
         GameManager.Instance.ResetGame();
     }
+
 }
