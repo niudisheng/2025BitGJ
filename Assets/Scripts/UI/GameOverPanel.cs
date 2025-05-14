@@ -43,6 +43,7 @@ public class GameOverPanel : MonoBehaviour
     {
         button.onClick.RemoveAllListeners();
         button.onClick.AddListener(action);
+        button.onClick.AddListener(() => { ButtonGroup.SetActive(false); });
     }
 
     private void BackToPick()
