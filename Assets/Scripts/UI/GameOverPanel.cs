@@ -83,7 +83,7 @@ public class GameOverPanel : MonoBehaviour
         WinPanel.SetActive(false);
         LosePanel.SetActive(false);
         ButtonGroup.SetActive(false);
-        GameManager.Instance.LoadChapter(GameManager.Instance.currentLevelData.GetNextLevelIndex());
+        GameManager.Instance.LoadChapter(GameManager.Instance.currentLevelData.levelIndex);
     }
 
 

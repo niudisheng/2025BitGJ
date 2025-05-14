@@ -12,13 +12,23 @@ namespace UI
 
         private void Awake()
         {
-            MyEventManager.Instance.AddEventListener(EventName.NewGame,LoadPickUpScene);
+            MyEventManager.Instance.AddEventListener(EventName.NewGame, LoadPickUpScene);
+            LoadLong();
         }
+
+        public void LoadLong()
+        {
+            if (!SceneManager.GetSceneByName("Long").isLoaded)
+            {
+                SceneManager.LoadScene(2, LoadSceneMode.Additive);
+            }
+        }
+
 
         private void OnEnable()
         {
             Debug.Log("MenuPanel OnEnable");
-            newGameButton.onClick.AddListener( OnNewGameButtonClicked1);
+            newGameButton.onClick.AddListener(OnNewGameButtonClicked1);
             quitButton.onClick.AddListener(OnQuitButtonClicked);
         }
 
@@ -33,21 +43,17 @@ namespace UI
         public void OnNewGameButtonClicked()
         {
             MyEventManager.Instance.EventTrigger(EventName.NewGame);
-
         }
+
         [ContextMenu("开始游戏测试")]
         public void OnNewGameButtonClicked1()
         {
             SceneLoadManager.Instance.LoadScene(GamesceneIndex);
-
         }
 
         private void LoadPickUpScene()
         {
             SceneLoadManager.Instance.LoadScene(GamesceneIndex);
         }
-
-
     }
-
 }
