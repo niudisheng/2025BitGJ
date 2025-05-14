@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -71,18 +71,20 @@ public class GameOverPanel : MonoBehaviour
         }
         ButtonGroup.SetActive(true);
     }
-    
-    
-    
+
+
+
     /// <summary>
     /// 重置关卡
     /// </summary>
     public void ResetLevel()
     {
         LosePanel.SetActive(false);
-        GameManager.Instance.ResetGame();
+        int currentSceneIndex = UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex;
+        SceneLoadManager.Instance.LoadScene(currentSceneIndex); //重新加载当前关卡
     }
-    
+
+
     /// <summary>
     /// 下一关
     /// </summary>
