@@ -16,6 +16,7 @@ public class GameOverPanel : MonoBehaviour
     public Button RetryButton;
     public GameObject WinPanel;
     public GameObject LosePanel;
+    public GameObject ButtonGroup;
     private void Awake()
     {
         if (instance == null)
@@ -35,6 +36,7 @@ public class GameOverPanel : MonoBehaviour
         SetButtonFunc(RetryButton, ResetLevel);
         WinPanel.SetActive(false);
         LosePanel.SetActive(false);
+        ButtonGroup.SetActive(false);
     }
 
     private void SetButtonFunc(Button button, UnityAction action)
@@ -66,6 +68,7 @@ public class GameOverPanel : MonoBehaviour
         {
             LosePanel.SetActive(true);
         }
+        ButtonGroup.SetActive(true);
     }
     
     
