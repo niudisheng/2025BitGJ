@@ -18,10 +18,12 @@ MonoBehaviour:
     bombAmmo: 0
     penetratingAmmo: 0
     destroyWallAmmo: 0
+    enemyCount: 4
     guideMessage: "\u4F7F\u7528 Q/E \u5207\u6362\u5B50\u5F39\uFF0C\u70B9\u51FB\u9F20\u6807\u5DE6\u952E\u7784\u51C6\u654C\u4EBA\u5C04\u51FB\uFF01"
   - levelIndex: 4
     normalAmmo: 3
     bombAmmo: 1
     penetratingAmmo: 0
     destroyWallAmmo: 0
-    guideMessage: 
+    enemyCount: 6
+    guideMessage: "\u4F7F\u7528\u7206\u70B8\u5B50\u5F39\u51FB\u6740\u5927\u91CF\u654C\u4EBA\uFF01"
