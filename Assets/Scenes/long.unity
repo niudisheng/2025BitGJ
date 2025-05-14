@@ -1543,6 +1543,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isGameOver: 0
+  levelConfig: {fileID: 11400000, guid: 83c22ab870bb0d84f9eaba0d899cffa6, type: 2}
   currentLevelData:
     levelIndex: 0
     normalAmmo: 0

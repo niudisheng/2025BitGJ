@@ -83,8 +83,7 @@ public class GameOverPanel : MonoBehaviour
         WinPanel.SetActive(false);
         LosePanel.SetActive(false);
         ButtonGroup.SetActive(false);
-        int currentSceneIndex = UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex;
-        SceneLoadManager.Instance.LoadScene(currentSceneIndex); //重新加载当前关卡
+        GameManager.Instance.LoadChapter(GameManager.Instance.currentLevelData.GetNextLevelIndex());
     }
 
 
