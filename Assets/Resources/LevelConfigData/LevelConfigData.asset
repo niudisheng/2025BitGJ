@@ -28,14 +28,14 @@ MonoBehaviour:
     enemyCount: 6
     guideMessage: "\u70B9\u51FBQ/E \u5207\u6362\u5B50\u5F39,\u4F7F\u7528\u7206\u70B8\u5B50\u5F39\u51FB\u6740\u5927\u91CF\u654C\u4EBA\uFF01"
   - levelIndex: 5
-    normalAmmo: 3
+    normalAmmo: 4
     bombAmmo: 1
     penetratingAmmo: 0
     destroyWallAmmo: 0
     enemyCount: 7
     guideMessage: 
   - levelIndex: 6
-    normalAmmo: 1
+    normalAmmo: 2
     bombAmmo: 2
     penetratingAmmo: 0
     destroyWallAmmo: 0
@@ -55,3 +55,24 @@ MonoBehaviour:
     destroyWallAmmo: 4
     enemyCount: 5
     guideMessage: "\u7834\u574F\u6728\u8D28\u5899\u58C1\uFF01"
+  - levelIndex: 9
+    normalAmmo: 1
+    bombAmmo: 1
+    penetratingAmmo: 1
+    destroyWallAmmo: 1
+    enemyCount: 6
+    guideMessage: 
+  - levelIndex: 10
+    normalAmmo: 3
+    bombAmmo: 1
+    penetratingAmmo: 1
+    destroyWallAmmo: 1
+    enemyCount: 7
+    guideMessage: "\u8179\u80CC\u53D7\u654C\uFF01"
+  - levelIndex: 11
+    normalAmmo: 99
+    bombAmmo: 99
+    penetratingAmmo: 99
+    destroyWallAmmo: 99
+    enemyCount: 1
+    guideMessage: "\u4F2A\u88C5\u6210\u5C0F\u5175\u7684\u654C\u519B\u9996\u9886\u51C6\u5907\u9003\u8DD1\uFF0C\u51FB\u6740\u4ED6\uFF01"
