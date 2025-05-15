@@ -6829,10 +6829,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Text
+  m_text: "\u4F60\u597D"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: c1dc88db5e911984eb759e4d370f79b3, type: 2}
-  m_sharedMaterial: {fileID: 6818075234459128898, guid: c1dc88db5e911984eb759e4d370f79b3, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 9916f411ccfa04f408dd7b74bc0b6fcf, type: 2}
+  m_sharedMaterial: {fileID: -2952626338066962354, guid: 9916f411ccfa04f408dd7b74bc0b6fcf, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
